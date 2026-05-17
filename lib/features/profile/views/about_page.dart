@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-
 import '../../../core/models/server_about_info.dart';
 import '../../../core/providers/app_providers.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/theme/theme_extensions.dart';
-import '../../../shared/utils/ui_utils.dart';
 import '../../../shared/widgets/conduit_components.dart';
 import '../widgets/settings_page_scaffold.dart';
 
 class AboutPage extends ConsumerStatefulWidget {
   const AboutPage({super.key});
-
-  static const _githubUrl = 'https://github.com/cogwheel0/conduit';
 
   @override
   ConsumerState<AboutPage> createState() => _AboutPageState();
@@ -98,7 +93,6 @@ class _AboutPageState extends ConsumerState<AboutPage> {
     AppLocalizations l10n,
     PackageInfo info,
   ) {
-    final theme = context.conduitTheme;
     final versionLabel = info.buildNumber.isEmpty
         ? info.version
         : '${info.version} (${info.buildNumber})';
@@ -108,54 +102,6 @@ class _AboutPageState extends ConsumerState<AboutPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _AboutRow(label: l10n.appVersion, value: versionLabel),
-          const SizedBox(height: Spacing.md),
-          Divider(color: theme.cardBorder.withValues(alpha: 0.5), height: 1),
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => _openGithub(context),
-            child: Padding(
-              padding: const EdgeInsets.only(top: Spacing.md),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.code_rounded,
-                    size: IconSize.medium,
-                    color: theme.buttonPrimary,
-                  ),
-                  const SizedBox(width: Spacing.sm),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l10n.githubRepository,
-                          style: theme.bodyMedium?.copyWith(
-                            color: theme.sidebarForeground,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(height: Spacing.xs),
-                        Text(
-                          'github.com/cogwheel0/conduit',
-                          style: theme.bodySmall?.copyWith(
-                            color: theme.sidebarForeground.withValues(
-                              alpha: 0.72,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: Spacing.sm),
-                  Icon(
-                    Icons.open_in_new_rounded,
-                    size: IconSize.small,
-                    color: theme.sidebarForeground.withValues(alpha: 0.7),
-                  ),
-                ],
-              ),
-            ),
-          ),
         ],
       ),
     );
@@ -172,25 +118,6 @@ class _AboutPageState extends ConsumerState<AboutPage> {
     );
   }
 
-  Future<void> _openGithub(BuildContext context) async {
-    try {
-      final launched = await launchUrlString(
-        AboutPage._githubUrl,
-        mode: LaunchMode.externalApplication,
-      );
-      if (!launched && context.mounted) {
-        UiUtils.showMessage(
-          context,
-          AppLocalizations.of(context)!.errorMessage,
-        );
-      }
-    } catch (_) {
-      if (!context.mounted) {
-        return;
-      }
-      UiUtils.showMessage(context, AppLocalizations.of(context)!.errorMessage);
-    }
-  }
 }
 
 class _AboutRow extends StatelessWidget {

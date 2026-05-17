@@ -1,6 +1,6 @@
 {
   "@@locale": "ja",
-  "appTitle": "Conduit",
+  "appTitle": "Public AI",
   "@appTitle": {
     "description": "Application name displayed in the app and OS UI."
   },
@@ -35,30 +35,6 @@
   "account": "アカウント",
   "@account": {
     "description": "Section header for account-related options."
-  },
-  "supportConduit": "Conduit を支援",
-  "@supportConduit": {
-    "description": "Section header inviting the user to financially support the project."
-  },
-  "supportConduitSubtitle": "継続的な開発を支援して、Conduit の独立性を保ちます。",
-  "@supportConduitSubtitle": {
-    "description": "Subtitle explaining why donations are helpful."
-  },
-  "githubSponsorsTitle": "GitHub Sponsors",
-  "@githubSponsorsTitle": {
-    "description": "Tile title linking to the GitHub Sponsors page."
-  },
-  "githubSponsorsSubtitle": "継続スポンサーになってロードマップ項目を支援します。",
-  "@githubSponsorsSubtitle": {
-    "description": "Subtitle explaining the impact of recurring sponsorship."
-  },
-  "buyMeACoffeeTitle": "Buy Me a Coffee",
-  "@buyMeACoffeeTitle": {
-    "description": "Tile title linking to the Buy Me a Coffee page."
-  },
-  "buyMeACoffeeSubtitle": "感謝の気持ちとして一回限りの寄付をします。",
-  "@buyMeACoffeeSubtitle": {
-    "description": "Subtitle encouraging one-time donations via Buy Me a Coffee."
   },
   "signOut": "サインアウト",
   "@signOut": {
@@ -506,7 +482,7 @@
   "@voiceCallErrorHelp": {
     "description": "Guidance shown when the voice call encounters an error."
   },
-  "messageHintText": "Conduit に質問",
+  "messageHintText": "Public AI に質問",
   "@messageHintText": {
     "description": "Short placeholder text in the message input."
   },
@@ -880,7 +856,7 @@
   "@aboutApp": {
     "description": "Settings tile title to view app information."
   },
-  "aboutAppSubtitle": "Conduit の情報とリンク",
+  "aboutAppSubtitle": "Public AI の情報とリンク",
   "@aboutAppSubtitle": {
     "description": "Subtitle/description for the About section."
   },
@@ -1185,11 +1161,11 @@
   "@themePalette": {
     "description": "Title for selecting the app color palette."
   },
-  "themePaletteConduitLabel": "Conduit",
+  "themePaletteConduitLabel": "Public AI",
   "@themePaletteConduitLabel": {
     "description": "Palette name for the default Conduit theme."
   },
-  "themePaletteConduitDescription": "Conduit 向けに設計されたクリーンなニュートラルテーマ。",
+  "themePaletteConduitDescription": "Public AI 向けに設計されたクリーンなニュートラルテーマ。",
   "@themePaletteConduitDescription": {
     "description": "Description of the Conduit palette."
   },
@@ -1237,7 +1213,7 @@
   "@currentlyUsingLightTheme": {
     "description": "Status text indicating light theme is active."
   },
-  "aboutConduit": "Conduit について",
+  "aboutConduit": "Public AI について",
   "@aboutConduit": {
     "description": "Dialog title for app information."
   },
@@ -1345,7 +1321,7 @@
   "@androidAssistantOverlayOption": {
     "description": "Option label for keeping the current assistant overlay."
   },
-  "androidAssistantNewChatOption": "新しいチャットで Conduit を開く",
+  "androidAssistantNewChatOption": "新しいチャットで Public AI を開く",
   "@androidAssistantNewChatOption": {
     "description": "Option label for opening the app to a fresh chat from the assistant trigger."
   },
@@ -2470,7 +2446,7 @@
   "passwordUpdated": "パスワードを更新しました。",
   "activeStatus": "有効",
   "inactiveStatus": "無効",
-  "appInformation": "Conduit アプリ",
+  "appInformation": "Public AI アプリ",
   "appVersion": "バージョン",
   "serverInformation": "サーバー情報",
   "serverInfoUnavailable": "現在サーバー情報を利用できません。",

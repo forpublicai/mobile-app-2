@@ -1,9 +1,9 @@
-<h1 align="center">Conduit</h1>
+<h1 align="center">Public AI</h1>
 
 <p align="center">
   <img
     src="assets/icons/icon.png"
-    alt="Conduit icon"
+    alt="Public AI icon"
     width="96"
     height="96"
   />
@@ -16,11 +16,11 @@
 <p align="center">
   <img
     alt="Latest Release"
-    src="https://img.shields.io/github/v/release/cogwheel0/conduit?display_name=tag&color=0A84FF"
+    src="https://img.shields.io/github/v/release/your-org/public-ai-mobile?display_name=tag&color=0A84FF"
   />
   <img
     alt="GitHub all downloads"
-    src="https://img.shields.io/github/downloads/cogwheel0/conduit/total?style=flat-square&label=Downloads&logo=github&color=111827"
+    src="https://img.shields.io/github/downloads/your-org/public-ai-mobile/total?style=flat-square&label=Downloads&logo=github&color=111827"
   />
   <img
     alt="License: GPL-3.0"
@@ -29,48 +29,7 @@
 </p>
 
 <p align="center">
-  <a href="https://play.google.com/store/apps/details?id=app.cogwheel.conduit">
-    <img
-      src="docs/store-badges/google.webp"
-      alt="Get it on Google Play"
-      height="56"
-    />
-  </a>
-  <a
-    href="https://apps.apple.com/us/app/conduit-open-webui-client/id6749840287"
-  >
-    <img
-      src="docs/store-badges/apple.webp"
-      alt="Download on the App Store"
-      height="56"
-    />
-  </a>
-</p>
-
-<p align="center">
-  <sub>OSS support and project momentum</sub>
-</p>
-
-<p align="center">
-      <a href="https://vercel.com/blog/vercel-open-source-program-fall-2025-cohort#conduit">
-        <img
-          alt="Vercel OSS Program"
-          src="https://vercel.com/oss/program-badge.svg"
-          height="25"
-        />
-      </a>
-      <br></br>
-      <a href="https://trendshift.io/repositories/15397" target="_blank">
-        <img
-          src="https://trendshift.io/api/badge/repositories/15397"
-          alt="cogwheel0%2Fconduit | Trendshift"
-          height="56"
-        />
-      </a>
-</p>
-
-<p align="center">
-  <a href="#why-conduit">Why Conduit</a> |
+  <a href="#why-public-ai">Why Public AI</a> |
   <a href="#feature-snapshot">Feature Snapshot</a> |
   <a href="#screenshots">Screenshots</a> |
   <a href="#quickstart">Quickstart</a> |
@@ -81,16 +40,16 @@
 <p align="center">
   <img
     src="docs/screenshots/conduit-demo.gif"
-    alt="Conduit demo"
+    alt="Public AI demo"
     width="360"
   />
 </p>
 
-## Why Conduit
+## Why Public AI
 
 Open WebUI is excellent on the desktop, but mobile usually breaks down at the
 edges: authentication, streaming stability, sharing content into a prompt, and
-working quickly from the home screen. Conduit is built to close that gap with a
+working quickly from the home screen. Public AI is built to close that gap with a
 native client that respects self-hosted deployments and still feels polished
 enough for daily use.
 
@@ -125,7 +84,7 @@ enough for daily use.
 
 ## Assistant Output That Holds Up on Mobile
 
-Conduit renders more than plain chat bubbles. The app includes native Flutter
+Public AI renders more than plain chat bubbles. The app includes native Flutter
 surfaces for:
 
 - syntax-highlighted code blocks with copy and preview affordances
@@ -148,15 +107,15 @@ surfaces for:
 
 | Chat | Models | Navigation | Settings |
 | --- | --- | --- | --- |
-| <img src="docs/screenshots/1.png" alt="Conduit conversation screen" width="200" /> | <img src="docs/screenshots/2.png" alt="Conduit model selection screen" width="200" /> | <img src="docs/screenshots/3.png" alt="Conduit navigation screen" width="200" /> | <img src="docs/screenshots/4.png" alt="Conduit settings screen" width="200" /> |
+| <img src="docs/screenshots/1.png" alt="Public AI conversation screen" width="200" /> | <img src="docs/screenshots/2.png" alt="Public AI model selection screen" width="200" /> | <img src="docs/screenshots/3.png" alt="Public AI navigation screen" width="200" /> | <img src="docs/screenshots/4.png" alt="Public AI settings screen" width="200" /> |
 
 ## Quickstart
 
-If you just want to use Conduit, install it from the App Store or Google Play,
+If you just want to use Public AI, install it from the App Store or Google Play,
 connect it to your Open WebUI server, and sign in with the auth flow your
 deployment already exposes.
 
-1. Launch Conduit.
+1. Launch Public AI.
 2. Enter the base URL for your Open WebUI instance.
 3. Add any required custom headers.
 4. Sign in with username and password, LDAP, JWT, SSO, or proxy auth.
@@ -178,8 +137,8 @@ filters appear when they are available on the connected server.
 ### Run locally
 
 ```bash
-git clone https://github.com/cogwheel0/conduit.git
-cd conduit
+git clone https://github.com/your-org/public-ai-mobile.git
+cd public-ai-mobile
 flutter pub get
 dart run build_runner build --delete-conflicting-outputs
 flutter run -d ios
@@ -209,13 +168,13 @@ flutter build ios --release
 
 ## Localization
 
-Conduit currently ships localized UI strings for English, German, Spanish,
+Public AI currently ships localized UI strings for English, German, Spanish,
 French, Italian, Korean, Dutch, Russian, Simplified Chinese, and Traditional
 Chinese.
 
 ## Architecture
 
-Conduit is a Flutter application organized around feature modules and shared
+Public AI is a Flutter application organized around feature modules and shared
 platform services. It uses Riverpod 3 with code generation for state management
 and GoRouter for navigation, with persistent local storage and secure
 credential handling built into the core layer.
@@ -274,20 +233,20 @@ lib/
 ## Security and Privacy
 
 - Preferences stay on-device and credentials use platform secure storage.
-- Conduit does not include third-party analytics or advertising SDKs.
-- Diagnostic logging is local and transient, and Conduit does not relay your
+- Public AI does not include third-party analytics or advertising SDKs.
+- Diagnostic logging is local and transient, and Public AI does not relay your
   data through developer-operated backend infrastructure.
 - Additional details are documented in [PRIVACY_POLICY.md](PRIVACY_POLICY.md).
 
 ## Contributing
 
-Conduit is actively developed and feedback is welcome.
+Public AI is actively developed and feedback is welcome.
 
-- Report bugs in [GitHub Issues](https://github.com/cogwheel0/conduit/issues).
+- Report bugs in [GitHub Issues](https://github.com/your-org/public-ai-mobile/issues).
 - Start product and feature discussions in
-  [GitHub Discussions](https://github.com/cogwheel0/conduit/discussions).
+  [GitHub Discussions](https://github.com/your-org/public-ai-mobile/discussions).
 - Share deployment notes, questions, or ideas in
-  [GitHub Discussions](https://github.com/cogwheel0/conduit/discussions).
+  [GitHub Discussions](https://github.com/your-org/public-ai-mobile/discussions).
 
 At the moment, unsolicited pull requests are not the primary contribution path.
 Open an issue or discussion first so changes can line up with the current
@@ -299,14 +258,8 @@ If you need private distribution, internal deployment support, or a custom
 enterprise/white-label build, open a discussion or contact the maintainer
 through the repository.
 
-## Support
-
-If Conduit is useful to you, you can support ongoing development through
-[GitHub Sponsors](https://github.com/sponsors/cogwheel0) or
-[Buy Me a Coffee](https://www.buymeacoffee.com/cogwheel0).
-
 ## License
 
-Conduit is released under the [GPL-3.0 License](LICENSE).
+Public AI is released under the [GPL-3.0 License](LICENSE).
 
-Conduit is an independent client and is not affiliated with Open WebUI.
+Public AI is an independent client and is not affiliated with Open WebUI.

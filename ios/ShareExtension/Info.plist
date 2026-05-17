@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleDisplayName</key>
-    <string>Ask Conduit</string>
+    <string>Ask Public AI</string>
     <key>AppGroupId</key>
-    <string>group.app.cogwheel.conduit</string>
+    <string>group.ai.public.app</string>
 
     <key>CFBundleVersion</key>
     <string>$(FLUTTER_BUILD_NUMBER)</string>

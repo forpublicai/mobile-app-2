@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appTitle": "Conduit",
+  "appTitle": "Public AI",
   "@appTitle": {
     "description": "Application name displayed in the app and OS UI."
   },
@@ -35,30 +35,6 @@
   "account": "Account",
   "@account": {
     "description": "Section header for account-related options."
-  },
-  "supportConduit": "Support Conduit",
-  "@supportConduit": {
-    "description": "Section header inviting the user to financially support the project."
-  },
-  "supportConduitSubtitle": "Keep Conduit independent by funding ongoing development.",
-  "@supportConduitSubtitle": {
-    "description": "Subtitle explaining why donations are helpful."
-  },
-  "githubSponsorsTitle": "GitHub Sponsors",
-  "@githubSponsorsTitle": {
-    "description": "Tile title linking to the GitHub Sponsors page."
-  },
-  "githubSponsorsSubtitle": "Become a recurring sponsor to fund roadmap items.",
-  "@githubSponsorsSubtitle": {
-    "description": "Subtitle explaining the impact of recurring sponsorship."
-  },
-  "buyMeACoffeeTitle": "Buy Me a Coffee",
-  "@buyMeACoffeeTitle": {
-    "description": "Tile title linking to the Buy Me a Coffee page."
-  },
-  "buyMeACoffeeSubtitle": "Make a one-time donation to say thanks.",
-  "@buyMeACoffeeSubtitle": {
-    "description": "Subtitle encouraging one-time donations via Buy Me a Coffee."
   },
   "signOut": "Sign Out",
   "@signOut": {
@@ -506,7 +482,7 @@
   "@voiceCallErrorHelp": {
     "description": "Guidance shown when the voice call encounters an error."
   },
-  "messageHintText": "Ask Conduit",
+  "messageHintText": "Ask Public AI",
   "@messageHintText": {
     "description": "Short placeholder text in the message input."
   },
@@ -880,7 +856,7 @@
   "@aboutApp": {
     "description": "Settings tile title to view app information."
   },
-  "aboutAppSubtitle": "Conduit information and links",
+  "aboutAppSubtitle": "Public AI information and links",
   "@aboutAppSubtitle": {
     "description": "Subtitle/description for the About section."
   },
@@ -1185,11 +1161,11 @@
   "@themePalette": {
     "description": "Title for selecting the app color palette."
   },
-  "themePaletteConduitLabel": "Conduit",
+  "themePaletteConduitLabel": "Public AI",
   "@themePaletteConduitLabel": {
     "description": "Palette name for the default Conduit theme."
   },
-  "themePaletteConduitDescription": "Clean neutral theme designed for Conduit.",
+  "themePaletteConduitDescription": "Clean neutral theme designed for Public AI.",
   "@themePaletteConduitDescription": {
     "description": "Description of the Conduit palette."
   },
@@ -1237,7 +1213,7 @@
   "@currentlyUsingLightTheme": {
     "description": "Status text indicating light theme is active."
   },
-  "aboutConduit": "About Conduit",
+  "aboutConduit": "About Public AI",
   "@aboutConduit": {
     "description": "Dialog title for app information."
   },
@@ -1345,7 +1321,7 @@
   "@androidAssistantOverlayOption": {
     "description": "Option label for keeping the current assistant overlay."
   },
-  "androidAssistantNewChatOption": "Open Conduit with a new chat",
+  "androidAssistantNewChatOption": "Open Public AI with a new chat",
   "@androidAssistantNewChatOption": {
     "description": "Option label for opening the app to a fresh chat from the assistant trigger."
   },
@@ -2688,7 +2664,7 @@
   "@inactiveStatus": {
     "description": "Label for an inactive account status."
   },
-  "appInformation": "Conduit app",
+  "appInformation": "Public AI app",
   "@appInformation": {
     "description": "Heading for local app information."
   },

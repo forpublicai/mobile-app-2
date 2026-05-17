@@ -1,5 +1,5 @@
 name: conduit
-description: Open-source mobile client for Open-WebUI
+description: Public AI — mobile client for Open WebUI
 version: 3.0.0+113
 publish_to: 'none'
 
@@ -99,6 +99,7 @@ dev_dependencies:
   custom_lint: 0.8.1
   mocktail: ^1.0.4
   checks: ^0.3.1
+  flutter_launcher_icons: ^0.14.3
 
 dependency_overrides:
   riverpod_lint: 3.0.3
@@ -133,4 +134,11 @@ flutter_native_splash:
   
   # Web specific settings
   web: false
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/icons/icon.png
+  adaptive_icon_background: "#E42313"
+  adaptive_icon_foreground: assets/icons/icon.png
     

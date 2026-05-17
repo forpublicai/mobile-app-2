@@ -1,6 +1,6 @@
 {
   "@@locale": "zh",
-  "appTitle": "Conduit",
+  "appTitle": "Public AI",
   "retry": "重试",
   "back": "返回",
   "you": "你",
@@ -15,12 +15,6 @@
     "description": "当无法访问服务器时解释可用操作的副标题"
   },
   "account": "账户",
-  "supportConduit": "支持 Conduit",
-  "supportConduitSubtitle": "通过资助持续开发来保持 Conduit 的独立性。",
-  "githubSponsorsTitle": "GitHub 赞助",
-  "githubSponsorsSubtitle": "成为定期赞助者以资助路线图项目。",
-  "buyMeACoffeeTitle": "Buy Me a Coffee",
-  "buyMeACoffeeSubtitle": "一次性捐赠以表达感谢。",
   "signOut": "退出登录",
   "endYourSession": "结束您的会话",
   "defaultModel": "默认模型",
@@ -103,7 +97,7 @@
   "voicePromptTapStart": "点击开始以开始",
   "voiceActionStop": "停止",
   "voiceActionStart": "开始",
-  "messageHintText": "问 Conduit",
+  "messageHintText": "问 Public AI",
   "stopGenerating": "停止生成",
   "codeCopiedToClipboard": "代码已复制到剪贴板。",
   "send": "发送",
@@ -192,7 +186,7 @@
   "deleteFolderMessage": "此文件夹及其分配引用将被删除。",
   "failedToDeleteFolder": "无法删除文件夹",
   "aboutApp": "关于",
-  "aboutAppSubtitle": "Conduit 信息和链接",
+  "aboutAppSubtitle": "Public AI 信息和链接",
   "web": "网页",
   "imageGen": "图像生成",
   "pinned": "已置顶",
@@ -281,7 +275,7 @@
   "themeLight": "浅色",
   "currentlyUsingDarkTheme": "当前使用深色主题",
   "currentlyUsingLightTheme": "当前使用浅色主题",
-  "aboutConduit": "关于 Conduit",
+  "aboutConduit": "关于 Public AI",
   "versionLabel": "版本：{version}（{build}）",
   "@versionLabel": {
     "placeholders": {
@@ -320,7 +314,7 @@
   "androidAssistantTitle": "Android 数字助理",
   "androidAssistantDescription": "选择触发 Android 数字助理时要执行的操作。",
   "androidAssistantOverlayOption": "显示快速浮层（默认）",
-  "androidAssistantNewChatOption": "打开 Conduit 并新建聊天",
+  "androidAssistantNewChatOption": "打开 Public AI 并新建聊天",
   "androidAssistantVoiceCallOption": "开始语音通话",
   "sttSettings": "语音转文字",
   "sttEngineLabel": "识别引擎",
@@ -653,11 +647,11 @@
   "@nextLabel": {
     "description": "Label for navigating to the next item."
   },
-  "themePaletteConduitLabel": "Conduit",
+  "themePaletteConduitLabel": "Public AI",
   "@themePaletteConduitLabel": {
     "description": "Palette name for the default Conduit theme."
   },
-  "themePaletteConduitDescription": "为 Conduit 设计的简洁中性色主题。",
+  "themePaletteConduitDescription": "为 Public AI 设计的简洁中性色主题。",
   "@themePaletteConduitDescription": {
     "description": "Description of the Conduit palette."
   },
@@ -1104,7 +1098,7 @@
   "passwordUpdated": "密码已更新。",
   "activeStatus": "活跃",
   "inactiveStatus": "未活跃",
-  "appInformation": "Conduit 应用",
+  "appInformation": "Public AI 应用",
   "appVersion": "版本",
   "serverInformation": "服务器信息",
   "serverInfoUnavailable": "服务器信息暂不可用。",

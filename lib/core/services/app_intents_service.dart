@@ -20,11 +20,11 @@ import '../../shared/services/tasks/task_queue.dart';
 
 part 'app_intents_service.g.dart';
 
-const _askIntentId = 'app.cogwheel.conduit.ask_chat';
-const _voiceCallIntentId = 'app.cogwheel.conduit.start_voice_call';
-const _sendTextIntentId = 'app.cogwheel.conduit.send_text';
-const _sendUrlIntentId = 'app.cogwheel.conduit.send_url';
-const _sendImageIntentId = 'app.cogwheel.conduit.send_image';
+const _askIntentId = 'ai.public.app.ask_chat';
+const _voiceCallIntentId = 'ai.public.app.start_voice_call';
+const _sendTextIntentId = 'ai.public.app.send_text';
+const _sendUrlIntentId = 'ai.public.app.send_url';
+const _sendImageIntentId = 'ai.public.app.send_image';
 
 /// Method channel for receiving App Intent invocations from native iOS code.
 /// Native Swift code defines the intents with proper titles and metadata.
@@ -88,7 +88,7 @@ class AppIntentCoordinator extends _$AppIntentCoordinator {
       await _prepareChat(prompt: prompt);
       final summary = prompt != null && prompt.isNotEmpty
           ? 'Opening chat for "$prompt"'
-          : 'Opening Conduit chat';
+          : 'Opening Public AI chat';
 
       return {'success': true, 'value': summary};
     } catch (error, stackTrace) {
@@ -132,7 +132,7 @@ class AppIntentCoordinator extends _$AppIntentCoordinator {
     try {
       await _startVoiceCall();
       DebugLogger.log('Voice call launched from Siri/Shortcuts', scope: 'siri');
-      return {'success': true, 'value': 'Starting Conduit voice call'};
+      return {'success': true, 'value': 'Starting Public AI voice call'};
     } catch (error, stackTrace) {
       DebugLogger.error(
         'app-intents-voice',
@@ -158,7 +158,7 @@ class AppIntentCoordinator extends _$AppIntentCoordinator {
         focusComposer: true,
         resetChat: true,
       );
-      return {'success': true, 'value': 'Sent to Conduit'};
+      return {'success': true, 'value': 'Sent to Public AI'};
     } catch (error, stackTrace) {
       DebugLogger.error(
         'app-intents-text',
@@ -240,13 +240,13 @@ class AppIntentCoordinator extends _$AppIntentCoordinator {
         return {
           'success': true,
           'value': isYoutube
-              ? 'YouTube video attached in Conduit'
-              : 'Webpage attached in Conduit',
+              ? 'YouTube video attached in Public AI'
+              : 'Webpage attached in Public AI',
         };
       } else {
         return {
           'success': true,
-          'value': 'Opening Conduit with URL (content could not be fetched)',
+          'value': 'Opening Public AI with URL (content could not be fetched)',
         };
       }
     } catch (error, stackTrace) {
@@ -276,7 +276,7 @@ class AppIntentCoordinator extends _$AppIntentCoordinator {
       );
       await _attachFiles([file]);
       await _prepareChatWithOptions(focusComposer: true, resetChat: true);
-      return {'success': true, 'value': 'Image attached in Conduit'};
+      return {'success': true, 'value': 'Image attached in Public AI'};
     } catch (error, stackTrace) {
       DebugLogger.error(
         'app-intents-image',

@@ -5,7 +5,6 @@ import '../../../shared/theme/theme_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import 'package:conduit/l10n/app_localizations.dart';
 import '../../../core/widgets/error_boundary.dart';
 import '../../../shared/widgets/conduit_loading.dart';
@@ -27,9 +26,6 @@ import '../widgets/profile_text_styles.dart';
 /// Profile page (You tab) showing user info and main actions
 /// Enhanced with production-grade design tokens for better cohesion
 class ProfilePage extends ConsumerWidget {
-  static const _githubSponsorsUrl = 'https://github.com/sponsors/cogwheel0';
-  static const _buyMeACoffeeUrl = 'https://www.buymeacoffee.com/cogwheel0';
-
   const ProfilePage({super.key});
 
   @override
@@ -104,8 +100,6 @@ class ProfilePage extends ConsumerWidget {
         _buildProfileHeader(context, userData, api),
         const SizedBox(height: Spacing.xl),
         _buildAccountSection(context, ref),
-        const SizedBox(height: Spacing.xl),
-        _buildSupportSection(context),
       ],
     );
   }
@@ -116,102 +110,6 @@ class ProfilePage extends ConsumerWidget {
       return mediaQuery.padding.top + kTextTabBarHeight + Spacing.lg;
     }
     return Spacing.lg;
-  }
-
-  Widget _buildSupportSection(BuildContext context) {
-    final theme = context.conduitTheme;
-    final textTheme = theme.bodySmall?.copyWith(
-      color: theme.sidebarForeground.withValues(alpha: 0.75),
-    );
-
-    final supportTiles = [
-      _buildSupportOption(
-        context,
-        icon: UiUtils.platformIcon(
-          ios: CupertinoIcons.gift,
-          android: Icons.coffee,
-        ),
-        title: AppLocalizations.of(context)!.buyMeACoffeeTitle,
-        subtitle: AppLocalizations.of(context)!.buyMeACoffeeSubtitle,
-        url: _buyMeACoffeeUrl,
-        color: theme.warning,
-      ),
-      _buildSupportOption(
-        context,
-        icon: UiUtils.platformIcon(
-          ios: CupertinoIcons.heart,
-          android: Icons.favorite_border,
-        ),
-        title: AppLocalizations.of(context)!.githubSponsorsTitle,
-        subtitle: AppLocalizations.of(context)!.githubSponsorsSubtitle,
-        url: _githubSponsorsUrl,
-        color: theme.success,
-      ),
-    ];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          AppLocalizations.of(context)!.supportConduit,
-          style: theme.headingSmall?.copyWith(color: theme.sidebarForeground),
-        ),
-        const SizedBox(height: Spacing.xs),
-        Text(
-          AppLocalizations.of(context)!.supportConduitSubtitle,
-          style: textTheme,
-        ),
-        const SizedBox(height: Spacing.sm),
-        for (var i = 0; i < supportTiles.length; i++) ...[
-          supportTiles[i],
-          if (i != supportTiles.length - 1) const SizedBox(height: Spacing.md),
-        ],
-      ],
-    );
-  }
-
-  Widget _buildSupportOption(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required String subtitle,
-    required String url,
-    required Color color,
-  }) {
-    final theme = context.conduitTheme;
-    return ProfileSettingTile(
-      onTap: () => _openExternalLink(context, url),
-      leading: _buildIconBadge(context, icon, color: color),
-      title: title,
-      subtitle: subtitle,
-      trailing: Icon(
-        UiUtils.platformIcon(
-          ios: CupertinoIcons.arrow_up_right,
-          android: Icons.open_in_new,
-        ),
-        color: theme.iconSecondary,
-        size: IconSize.small,
-      ),
-    );
-  }
-
-  Future<void> _openExternalLink(BuildContext context, String url) async {
-    try {
-      final launched = await launchUrlString(
-        url,
-        mode: LaunchMode.externalApplication,
-      );
-
-      if (!launched && context.mounted) {
-        UiUtils.showMessage(
-          context,
-          AppLocalizations.of(context)!.errorMessage,
-        );
-      }
-    } catch (_) {
-      if (!context.mounted) return;
-      UiUtils.showMessage(context, AppLocalizations.of(context)!.errorMessage);
-    }
   }
 
   Widget _buildProfileHeader(

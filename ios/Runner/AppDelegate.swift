@@ -140,7 +140,7 @@ class BackgroundStreamingHandler: NSObject {
     private var activeLeases: [String: BackgroundStreamingLease] = [:]
     private var channel: FlutterMethodChannel?
 
-    static let processingTaskIdentifier = "app.cogwheel.conduit.refresh"
+    static let processingTaskIdentifier = "ai.public.app.refresh"
 
     override init() {
         super.init()
@@ -341,7 +341,7 @@ class BackgroundStreamingHandler: NSObject {
 
     private func beginStreamingBackgroundTask() -> UIBackgroundTaskIdentifier {
         var taskIdentifier: UIBackgroundTaskIdentifier = .invalid
-        taskIdentifier = UIApplication.shared.beginBackgroundTask(withName: "ConduitStreaming") { [weak self] in
+        taskIdentifier = UIApplication.shared.beginBackgroundTask(withName: "PublicAIStreaming") { [weak self] in
             Task { @MainActor [weak self] in
                 guard let self = self else { return }
                 self.notifyStreamsSuspending(reason: "background_task_expiring")
@@ -567,16 +567,16 @@ enum AppIntentError: Error {
 
 @available(iOS 16.0, *)
 struct AskConduitIntent: AppIntent {
-    static var title: LocalizedStringResource = "Ask Conduit"
+    static var title: LocalizedStringResource = "Ask Public AI"
     static var description = IntentDescription(
-        "Start a Conduit chat with an optional prompt."
+        "Start a Public AI chat with an optional prompt."
     )
     static var isDiscoverable = true
     static var openAppWhenRun = true
 
     @Parameter(
         title: "Prompt",
-        requestValueDialog: IntentDialog("What should Conduit answer?")
+        requestValueDialog: IntentDialog("What should Public AI answer?")
     )
     var prompt: String?
 
@@ -597,7 +597,7 @@ struct AskConduitIntent: AppIntent {
             ? ["prompt": prompt ?? ""]
             : [:]
         let result = await channel.invokeIntent(
-            identifier: "app.cogwheel.conduit.ask_chat",
+            identifier: "ai.public.app.ask_chat",
             parameters: parameters
         )
 
@@ -607,7 +607,7 @@ struct AskConduitIntent: AppIntent {
         }
 
         let message = result["error"] as? String
-            ?? appLocalized("appIntent.unableOpenChat", "Unable to open Conduit chat")
+            ?? appLocalized("appIntent.unableOpenChat", "Unable to open Public AI chat")
         throw AppIntentError.executionFailed(message)
     }
 }
@@ -616,7 +616,7 @@ struct AskConduitIntent: AppIntent {
 struct StartVoiceCallIntent: AppIntent {
     static var title: LocalizedStringResource = "Start Voice Call"
     static var description = IntentDescription(
-        "Start a live voice call with Conduit."
+        "Start a live voice call with Public AI."
     )
     static var isDiscoverable = true
     static var openAppWhenRun = true
@@ -629,7 +629,7 @@ struct StartVoiceCallIntent: AppIntent {
         }
 
         let result = await channel.invokeIntent(
-            identifier: "app.cogwheel.conduit.start_voice_call",
+            identifier: "ai.public.app.start_voice_call",
             parameters: [:]
         )
 
@@ -645,17 +645,17 @@ struct StartVoiceCallIntent: AppIntent {
 }
 
 @available(iOS 16.0, *)
-struct ConduitSendTextIntent: AppIntent {
-    static var title: LocalizedStringResource = "Send to Conduit"
+struct Public AISendTextIntent: AppIntent {
+    static var title: LocalizedStringResource = "Send to Public AI"
     static var description = IntentDescription(
-        "Start a Conduit chat with provided text."
+        "Start a Public AI chat with provided text."
     )
     static var isDiscoverable = true
     static var openAppWhenRun = true
 
     @Parameter(
         title: "Text",
-        requestValueDialog: IntentDialog("What should Conduit process?")
+        requestValueDialog: IntentDialog("What should Public AI process?")
     )
     var text: String?
 
@@ -668,12 +668,12 @@ struct ConduitSendTextIntent: AppIntent {
 
         let trimmed = text?.trimmingCharacters(in: .whitespacesAndNewlines)
         let result = await channel.invokeIntent(
-            identifier: "app.cogwheel.conduit.send_text",
+            identifier: "ai.public.app.send_text",
             parameters: ["text": trimmed ?? ""]
         )
 
         if let success = result["success"] as? Bool, success {
-            let value = result["value"] as? String ?? appLocalized("appIntent.sentToConduit", "Sent to Conduit")
+            let value = result["value"] as? String ?? appLocalized("appIntent.sentToPublic AI", "Sent to Public AI")
             return .result(value: value)
         }
 
@@ -683,17 +683,17 @@ struct ConduitSendTextIntent: AppIntent {
 }
 
 @available(iOS 16.0, *)
-struct ConduitSendUrlIntent: AppIntent {
-    static var title: LocalizedStringResource = "Send Link to Conduit"
+struct Public AISendUrlIntent: AppIntent {
+    static var title: LocalizedStringResource = "Send Link to Public AI"
     static var description = IntentDescription(
-        "Send a URL into Conduit for summary or analysis."
+        "Send a URL into Public AI for summary or analysis."
     )
     static var isDiscoverable = true
     static var openAppWhenRun = true
 
     @Parameter(
         title: "URL",
-        requestValueDialog: IntentDialog("Which link should Conduit analyze?")
+        requestValueDialog: IntentDialog("Which link should Public AI analyze?")
     )
     var url: URL
 
@@ -705,12 +705,12 @@ struct ConduitSendUrlIntent: AppIntent {
         }
 
         let result = await channel.invokeIntent(
-            identifier: "app.cogwheel.conduit.send_url",
+            identifier: "ai.public.app.send_url",
             parameters: ["url": url.absoluteString]
         )
 
         if let success = result["success"] as? Bool, success {
-            let value = result["value"] as? String ?? appLocalized("appIntent.sentLinkToConduit", "Sent link to Conduit")
+            let value = result["value"] as? String ?? appLocalized("appIntent.sentLinkToPublic AI", "Sent link to Public AI")
             return .result(value: value)
         }
 
@@ -720,17 +720,17 @@ struct ConduitSendUrlIntent: AppIntent {
 }
 
 @available(iOS 16.0, *)
-struct ConduitSendImageIntent: AppIntent {
-    static var title: LocalizedStringResource = "Send Image to Conduit"
+struct Public AISendImageIntent: AppIntent {
+    static var title: LocalizedStringResource = "Send Image to Public AI"
     static var description = IntentDescription(
-        "Send an image into Conduit for analysis."
+        "Send an image into Public AI for analysis."
     )
     static var isDiscoverable = true
     static var openAppWhenRun = true
 
     @Parameter(
         title: "Image",
-        requestValueDialog: IntentDialog("Choose an image for Conduit.")
+        requestValueDialog: IntentDialog("Choose an image for Public AI.")
     )
     var image: IntentFile
 
@@ -752,7 +752,7 @@ struct ConduitSendImageIntent: AppIntent {
         let name = image.filename ?? "shared_image.jpg"
 
         let result = await channel.invokeIntent(
-            identifier: "app.cogwheel.conduit.send_image",
+            identifier: "ai.public.app.send_image",
             parameters: [
                 "filename": name,
                 "bytes": base64,
@@ -760,7 +760,7 @@ struct ConduitSendImageIntent: AppIntent {
         )
 
         if let success = result["success"] as? Bool, success {
-            let value = result["value"] as? String ?? appLocalized("appIntent.sentImageToConduit", "Sent image to Conduit")
+            let value = result["value"] as? String ?? appLocalized("appIntent.sentImageToPublic AI", "Sent image to Public AI")
             return .result(value: value)
         }
 
@@ -790,7 +790,7 @@ struct AppShortcuts: AppShortcutsProvider {
                 ]
             ),
             AppShortcut(
-                intent: ConduitSendTextIntent(),
+                intent: Public AISendTextIntent(),
                 phrases: [
                     "Send text to \(.applicationName)",
                     "Share text with \(.applicationName)",
@@ -798,7 +798,7 @@ struct AppShortcuts: AppShortcutsProvider {
                 ]
             ),
             AppShortcut(
-                intent: ConduitSendUrlIntent(),
+                intent: Public AISendUrlIntent(),
                 phrases: [
                     "Summarize link in \(.applicationName)",
                     "Analyze link with \(.applicationName)",
@@ -806,7 +806,7 @@ struct AppShortcuts: AppShortcutsProvider {
                 ]
             ),
             AppShortcut(
-                intent: ConduitSendImageIntent(),
+                intent: Public AISendImageIntent(),
                 phrases: [
                     "Send image to \(.applicationName)",
                     "Analyze image with \(.applicationName)",
@@ -890,7 +890,7 @@ struct AppShortcuts: AppShortcutsProvider {
     // Setup cookie manager channel for WebView cookie access
     let cookieRegistrar = engineBridge.applicationRegistrar
     let cookieChannel = FlutterMethodChannel(
-      name: "com.conduit.app/cookies",
+      name: "com.publicai.app/cookies",
       binaryMessenger: cookieRegistrar.messenger()
     )
 

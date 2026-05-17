@@ -1,4 +1,4 @@
-package app.cogwheel.conduit
+package ai.public.app
 
 import android.app.Application
 import android.app.Notification

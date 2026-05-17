@@ -31,7 +31,7 @@ class WidgetActions {
 }
 
 /// App group identifier for iOS widget data sharing.
-const String _appGroupId = 'group.app.cogwheel.conduit';
+const String _appGroupId = 'group.ai.public.app';
 
 /// Android widget provider class name.
 const String _androidWidgetName = 'ConduitWidgetProvider';

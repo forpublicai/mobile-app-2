@@ -1,6 +1,6 @@
 {
   "@@locale": "ru",
-  "appTitle": "Conduit",
+  "appTitle": "Public AI",
   "retry": "Повторить",
   "back": "Назад",
   "you": "Вы",
@@ -15,12 +15,6 @@
     "description": "Подзаголовок с доступными действиями при недоступности сервера"
   },
   "account": "Аккаунт",
-  "supportConduit": "Поддержать Conduit",
-  "supportConduitSubtitle": "Сохраните независимость Conduit, финансируя разработку.",
-  "githubSponsorsTitle": "GitHub Sponsors",
-  "githubSponsorsSubtitle": "Станьте регулярным спонсором для финансирования дорожной карты.",
-  "buyMeACoffeeTitle": "Buy Me a Coffee",
-  "buyMeACoffeeSubtitle": "Сделайте разовое пожертвование в знак благодарности.",
   "signOut": "Выйти",
   "endYourSession": "Завершить сеанс",
   "defaultModel": "Модель по умолчанию",
@@ -103,7 +97,7 @@
   "voicePromptTapStart": "Нажмите «Начать» для запуска",
   "voiceActionStop": "Стоп",
   "voiceActionStart": "Начать",
-  "messageHintText": "Спросите Conduit",
+  "messageHintText": "Спросите Public AI",
   "stopGenerating": "Остановить генерацию",
   "codeCopiedToClipboard": "Код скопирован в буфер обмена.",
   "send": "Отправить",
@@ -192,7 +186,7 @@
   "deleteFolderMessage": "Эта папка и ее ссылки будут удалены.",
   "failedToDeleteFolder": "Не удалось удалить папку",
   "aboutApp": "О",
-  "aboutAppSubtitle": "Информация и ссылки Conduit",
+  "aboutAppSubtitle": "Информация и ссылки Public AI",
   "web": "Веб",
   "imageGen": "Генерация изображений",
   "pinned": "Закреплено",
@@ -281,7 +275,7 @@
   "themeLight": "Светлая",
   "currentlyUsingDarkTheme": "Используется темная тема",
   "currentlyUsingLightTheme": "Используется светлая тема",
-  "aboutConduit": "О Conduit",
+  "aboutConduit": "О Public AI",
   "versionLabel": "Версия: {version} ({build})",
   "@versionLabel": {
     "placeholders": {
@@ -320,7 +314,7 @@
   "androidAssistantTitle": "Цифровой ассистент Android",
   "androidAssistantDescription": "Выберите, что произойдёт при запуске цифрового ассистента Android.",
   "androidAssistantOverlayOption": "Показать быстрое наложение (по умолчанию)",
-  "androidAssistantNewChatOption": "Открыть Conduit с новым чатом",
+  "androidAssistantNewChatOption": "Открыть Public AI с новым чатом",
   "androidAssistantVoiceCallOption": "Начать голосовой вызов",
   "sttSettings": "Речь в текст",
   "sttEngineLabel": "Движок распознавания",
@@ -653,11 +647,11 @@
   "@nextLabel": {
     "description": "Label for navigating to the next item."
   },
-  "themePaletteConduitLabel": "Conduit",
+  "themePaletteConduitLabel": "Public AI",
   "@themePaletteConduitLabel": {
     "description": "Palette name for the default Conduit theme."
   },
-  "themePaletteConduitDescription": "Нейтральная чистая тема, созданная для Conduit.",
+  "themePaletteConduitDescription": "Нейтральная чистая тема, созданная для Public AI.",
   "@themePaletteConduitDescription": {
     "description": "Description of the Conduit palette."
   },
@@ -1104,7 +1098,7 @@
   "passwordUpdated": "Пароль обновлен.",
   "activeStatus": "Активен",
   "inactiveStatus": "Неактивен",
-  "appInformation": "Приложение Conduit",
+  "appInformation": "Приложение Public AI",
   "appVersion": "Версия",
   "serverInformation": "Информация о сервере",
   "serverInfoUnavailable": "Информация о сервере сейчас недоступна.",

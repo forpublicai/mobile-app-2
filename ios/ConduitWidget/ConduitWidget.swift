@@ -1,6 +1,6 @@
 //
-//  ConduitWidget.swift
-//  ConduitWidget
+//  Public AIWidget.swift
+//  Public AIWidget
 //
 //  Created by cogwheel on 07/12/25.
 //
@@ -10,24 +10,24 @@ import SwiftUI
 
 // MARK: - Timeline Entry
 
-struct ConduitEntry: TimelineEntry {
+struct Public AIEntry: TimelineEntry {
     let date: Date
 }
 
 // MARK: - Timeline Provider
 
-struct ConduitProvider: TimelineProvider {
-    func placeholder(in context: Context) -> ConduitEntry {
-        ConduitEntry(date: Date())
+struct Public AIProvider: TimelineProvider {
+    func placeholder(in context: Context) -> Public AIEntry {
+        Public AIEntry(date: Date())
     }
 
     func getSnapshot(in context: Context, completion: @escaping (ConduitEntry) -> Void) {
-        let entry = ConduitEntry(date: Date())
+        let entry = Public AIEntry(date: Date())
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<ConduitEntry>) -> Void) {
-        let entry = ConduitEntry(date: Date())
+        let entry = Public AIEntry(date: Date())
         let timeline = Timeline(entries: [entry], policy: .never)
         completion(timeline)
     }
@@ -35,8 +35,8 @@ struct ConduitProvider: TimelineProvider {
 
 // MARK: - Widget View
 
-struct ConduitWidgetEntryView: View {
-    var entry: ConduitProvider.Entry
+struct Public AIWidgetEntryView: View {
+    var entry: Public AIProvider.Entry
     @Environment(\.widgetFamily) var family
     @Environment(\.colorScheme) var colorScheme
 
@@ -54,8 +54,8 @@ struct ConduitWidgetEntryView: View {
 
     var body: some View {
         VStack(spacing: 12) {
-            // Main "Ask Conduit" pill - ChatGPT style
-            Link(destination: URL(string: "conduit://new_chat?homeWidget=true")!) {
+            // Main "Ask Public AI" pill - ChatGPT style
+            Link(destination: URL(string: "publicai://new_chat?homeWidget=true")!) {
                 HStack(spacing: 12) {
                     Image("HubIcon")
                         .renderingMode(.template)
@@ -63,7 +63,7 @@ struct ConduitWidgetEntryView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 28, height: 28)
                         .foregroundStyle(contentColor.opacity(0.85))
-                    Text("Ask Conduit")
+                    Text("Ask Public AI")
                         .font(.system(size: 18, weight: .medium, design: .rounded))
                         .foregroundStyle(contentColor.opacity(0.85))
                     Spacer()
@@ -82,25 +82,25 @@ struct ConduitWidgetEntryView: View {
             HStack(spacing: 8) {
                 CircularIconButton(
                     symbol: "camera",
-                    url: "conduit://camera?homeWidget=true",
+                    url: "publicai://camera?homeWidget=true",
                     contentColor: contentColor,
                     buttonBackground: buttonBackground
                 )
                 CircularIconButton(
                     symbol: "photo.on.rectangle.angled",
-                    url: "conduit://photos?homeWidget=true",
+                    url: "publicai://photos?homeWidget=true",
                     contentColor: contentColor,
                     buttonBackground: buttonBackground
                 )
                 CircularIconButton(
                     symbol: "waveform",
-                    url: "conduit://mic?homeWidget=true",
+                    url: "publicai://mic?homeWidget=true",
                     contentColor: contentColor,
                     buttonBackground: buttonBackground
                 )
                 CircularIconButton(
                     symbol: "doc.on.clipboard",
-                    url: "conduit://clipboard?homeWidget=true",
+                    url: "publicai://clipboard?homeWidget=true",
                     contentColor: contentColor,
                     buttonBackground: buttonBackground
                 )
@@ -135,20 +135,20 @@ struct CircularIconButton: View {
 
 // MARK: - Widget Configuration
 
-struct ConduitWidget: Widget {
+struct Public AIWidget: Widget {
     let kind: String = "ConduitWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: ConduitProvider()) { entry in
+        StaticConfiguration(kind: kind, provider: Public AIProvider()) { entry in
             if #available(iOS 17.0, *) {
-                ConduitWidgetEntryView(entry: entry)
+                Public AIWidgetEntryView(entry: entry)
                     .containerBackground(Color("WidgetBackground"), for: .widget)
             } else {
-                ConduitWidgetEntryView(entry: entry)
+                Public AIWidgetEntryView(entry: entry)
                     .background(Color("WidgetBackground"))
             }
         }
-        .configurationDisplayName("Conduit")
+        .configurationDisplayName("Public AI")
         .description("Quick access to chat, camera, photos, and voice.")
         .supportedFamilies([.systemMedium])
         .contentMarginsDisabled()
@@ -158,8 +158,8 @@ struct ConduitWidget: Widget {
 // MARK: - Preview
 
 #Preview(as: .systemMedium) {
-    ConduitWidget()
+    Public AIWidget()
 } timeline: {
-    ConduitEntry(date: .now)
+    Public AIEntry(date: .now)
 }
 

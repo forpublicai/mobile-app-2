@@ -1,6 +1,6 @@
 {
   "@@locale": "es",
-  "appTitle": "Conduit",
+  "appTitle": "Public AI",
   "retry": "Reintentar",
   "back": "Atrás",
   "you": "Tú",
@@ -15,12 +15,6 @@
     "description": "Subtítulo que explica las acciones disponibles cuando no se puede acceder al servidor"
   },
   "account": "Cuenta",
-  "supportConduit": "Apoyar Conduit",
-  "supportConduitSubtitle": "Mantén Conduit independiente financiando el desarrollo continuo.",
-  "githubSponsorsTitle": "GitHub Sponsors",
-  "githubSponsorsSubtitle": "Conviértete en un patrocinador recurrente para financiar elementos del roadmap.",
-  "buyMeACoffeeTitle": "Buy Me a Coffee",
-  "buyMeACoffeeSubtitle": "Haz una donación única para agradecer.",
   "signOut": "Cerrar sesión",
   "endYourSession": "Finalizar tu sesión",
   "defaultModel": "Modelo predeterminado",
@@ -103,7 +97,7 @@
   "voicePromptTapStart": "Toca Iniciar para comenzar",
   "voiceActionStop": "Detener",
   "voiceActionStart": "Iniciar",
-  "messageHintText": "Pregunta a Conduit",
+  "messageHintText": "Pregunta a Public AI",
   "stopGenerating": "Detener generación",
   "codeCopiedToClipboard": "Código copiado al portapapeles.",
   "send": "Enviar",
@@ -192,7 +186,7 @@
   "deleteFolderMessage": "Esta carpeta y sus referencias de asignación se eliminarán.",
   "failedToDeleteFolder": "No se pudo eliminar la carpeta",
   "aboutApp": "Acerca de",
-  "aboutAppSubtitle": "Información y enlaces de Conduit",
+  "aboutAppSubtitle": "Información y enlaces de Public AI",
   "web": "Web",
   "imageGen": "Generación de imágenes",
   "pinned": "Anclado",
@@ -281,7 +275,7 @@
   "themeLight": "Claro",
   "currentlyUsingDarkTheme": "Usando actualmente el tema oscuro",
   "currentlyUsingLightTheme": "Usando actualmente el tema claro",
-  "aboutConduit": "Acerca de Conduit",
+  "aboutConduit": "Acerca de Public AI",
   "versionLabel": "Versión: {version} ({build})",
   "@versionLabel": {
     "placeholders": {
@@ -320,7 +314,7 @@
   "androidAssistantTitle": "Asistente digital de Android",
   "androidAssistantDescription": "Elige qué ocurre cuando activas el asistente digital de Android.",
   "androidAssistantOverlayOption": "Mostrar superposición rápida (predeterminado)",
-  "androidAssistantNewChatOption": "Abrir Conduit con un chat nuevo",
+  "androidAssistantNewChatOption": "Abrir Public AI con un chat nuevo",
   "androidAssistantVoiceCallOption": "Iniciar una llamada de voz",
   "sttSettings": "Voz a texto",
   "sttEngineLabel": "Motor de reconocimiento",
@@ -653,11 +647,11 @@
   "@nextLabel": {
     "description": "Label for navigating to the next item."
   },
-  "themePaletteConduitLabel": "Conduit",
+  "themePaletteConduitLabel": "Public AI",
   "@themePaletteConduitLabel": {
     "description": "Palette name for the default Conduit theme."
   },
-  "themePaletteConduitDescription": "Tema neutro y limpio diseñado para Conduit.",
+  "themePaletteConduitDescription": "Tema neutro y limpio diseñado para Public AI.",
   "@themePaletteConduitDescription": {
     "description": "Description of the Conduit palette."
   },
@@ -1104,7 +1098,7 @@
   "passwordUpdated": "Contraseña actualizada.",
   "activeStatus": "Activo",
   "inactiveStatus": "Inactivo",
-  "appInformation": "Aplicación Conduit",
+  "appInformation": "Aplicación Public AI",
   "appVersion": "Versión",
   "serverInformation": "Información del servidor",
   "serverInfoUnavailable": "La información del servidor no está disponible ahora.",

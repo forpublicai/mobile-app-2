@@ -178,7 +178,7 @@ class VoiceCallController extends _$VoiceCallController {
               ref.read(selectedModelProvider)?.name ?? 'Assistant';
           _nativeCallId = await _callSurface.startOutgoingCall(
             callerName: modelName,
-            handle: 'Conduit AI',
+            handle: 'Public AI',
           );
           _listenForNativeCallEvents(token);
         }

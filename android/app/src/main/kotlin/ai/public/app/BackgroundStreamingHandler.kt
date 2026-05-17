@@ -1,4 +1,4 @@
-package app.cogwheel.conduit
+package ai.public.app
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -82,8 +82,8 @@ class BackgroundStreamingService : Service() {
         const val EXTRA_LEASE_KINDS = "leaseKinds"
         const val EXTRA_MIC_LEASE_IDS = "micLeaseIds"
         
-        const val ACTION_TIME_LIMIT_APPROACHING = "app.cogwheel.conduit.TIME_LIMIT_APPROACHING"
-        const val ACTION_MIC_PERMISSION_FALLBACK = "app.cogwheel.conduit.MIC_PERMISSION_FALLBACK"
+        const val ACTION_TIME_LIMIT_APPROACHING = "ai.public.app.TIME_LIMIT_APPROACHING"
+        const val ACTION_MIC_PERMISSION_FALLBACK = "ai.public.app.MIC_PERMISSION_FALLBACK"
         const val EXTRA_REMAINING_MINUTES = "remainingMinutes"
     }
 
@@ -120,7 +120,7 @@ class BackgroundStreamingService : Service() {
                 // Otherwise startForeground throws "Bad notification" error
                 ensureNotificationChannel()
                 val fallbackNotification = NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setContentTitle("Conduit")
+                    .setContentTitle("Public AI")
                     .setSmallIcon(R.drawable.ic_hub)
                     .setSilent(true)
                     .setOngoing(true)  // Prevent user from dismissing foreground service notification
@@ -266,7 +266,7 @@ class BackgroundStreamingService : Service() {
     
     private fun sendFailureNotification(e: Exception) {
         // Send broadcast intent to notify MainActivity
-        val intent = Intent("app.cogwheel.conduit.FOREGROUND_SERVICE_FAILED")
+        val intent = Intent("ai.public.app.FOREGROUND_SERVICE_FAILED")
         intent.putExtra("error", e.message ?: "Unknown error")
         intent.putExtra("errorType", e.javaClass.simpleName)
         sendBroadcast(intent)
@@ -327,7 +327,7 @@ class BackgroundStreamingService : Service() {
 
         // Create a minimal, silent notification (required for foreground service)
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Conduit")
+            .setContentTitle("Public AI")
             .setContentText("Background service active")
             .setSmallIcon(R.drawable.ic_hub)
             .setContentIntent(pendingIntent)
@@ -590,7 +590,7 @@ class BackgroundStreamingHandler(private val activity: MainActivity) : MethodCal
         broadcastReceiver = object : android.content.BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 when (intent?.action) {
-                    "app.cogwheel.conduit.FOREGROUND_SERVICE_FAILED" -> {
+                    "ai.public.app.FOREGROUND_SERVICE_FAILED" -> {
                         val error = intent.getStringExtra("error") ?: "Unknown error"
                         val errorType = intent.getStringExtra("errorType") ?: "Exception"
                         
@@ -628,7 +628,7 @@ class BackgroundStreamingHandler(private val activity: MainActivity) : MethodCal
         }
         
         val filter = android.content.IntentFilter().apply {
-            addAction("app.cogwheel.conduit.FOREGROUND_SERVICE_FAILED")
+            addAction("ai.public.app.FOREGROUND_SERVICE_FAILED")
             addAction(BackgroundStreamingService.ACTION_TIME_LIMIT_APPROACHING)
             addAction(BackgroundStreamingService.ACTION_MIC_PERMISSION_FALLBACK)
         }

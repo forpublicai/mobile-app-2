@@ -1,6 +1,6 @@
 {
   "@@locale": "nl",
-  "appTitle": "Conduit",
+  "appTitle": "Public AI",
   "retry": "Opnieuw proberen",
   "back": "Terug",
   "you": "Jij",
@@ -15,12 +15,6 @@
     "description": "Ondertitel die beschikbare acties uitlegt wanneer de server niet bereikbaar is"
   },
   "account": "Account",
-  "supportConduit": "Ondersteun Conduit",
-  "supportConduitSubtitle": "Houd Conduit onafhankelijk door doorlopende ontwikkeling te financieren.",
-  "githubSponsorsTitle": "GitHub Sponsors",
-  "githubSponsorsSubtitle": "Word een terugkerende sponsor om roadmap-items te financieren.",
-  "buyMeACoffeeTitle": "Buy Me a Coffee",
-  "buyMeACoffeeSubtitle": "Doe een eenmalige donatie om bedankt te zeggen.",
   "signOut": "Uitloggen",
   "endYourSession": "Beëindig je sessie",
   "defaultModel": "Standaardmodel",
@@ -103,7 +97,7 @@
   "voicePromptTapStart": "Tik op Start om te beginnen",
   "voiceActionStop": "Stop",
   "voiceActionStart": "Start",
-  "messageHintText": "Vraag Conduit",
+  "messageHintText": "Vraag Public AI",
   "stopGenerating": "Stop met genereren",
   "codeCopiedToClipboard": "Code gekopieerd naar klembord.",
   "send": "Verzenden",
@@ -192,7 +186,7 @@
   "deleteFolderMessage": "Deze map en zijn toewijzingen worden verwijderd.",
   "failedToDeleteFolder": "Kan map niet verwijderen",
   "aboutApp": "Over",
-  "aboutAppSubtitle": "Conduit informatie en links",
+  "aboutAppSubtitle": "Public AI informatie en links",
   "web": "Web",
   "imageGen": "Afbeeldingsgeneratie",
   "pinned": "Vastgepind",
@@ -281,7 +275,7 @@
   "themeLight": "Licht",
   "currentlyUsingDarkTheme": "Momenteel donker thema in gebruik",
   "currentlyUsingLightTheme": "Momenteel licht thema in gebruik",
-  "aboutConduit": "Over Conduit",
+  "aboutConduit": "Over Public AI",
   "versionLabel": "Versie: {version} ({build})",
   "@versionLabel": {
     "placeholders": {
@@ -320,7 +314,7 @@
   "androidAssistantTitle": "Digitale Android-assistent",
   "androidAssistantDescription": "Kies wat er gebeurt wanneer je de digitale Android-assistent activeert.",
   "androidAssistantOverlayOption": "Snelle overlay tonen (standaard)",
-  "androidAssistantNewChatOption": "Conduit openen met een nieuwe chat",
+  "androidAssistantNewChatOption": "Public AI openen met een nieuwe chat",
   "androidAssistantVoiceCallOption": "Spraakoproep starten",
   "sttSettings": "Spraak naar tekst",
   "sttEngineLabel": "Herkenningsengine",
@@ -653,11 +647,11 @@
   "@nextLabel": {
     "description": "Label for navigating to the next item."
   },
-  "themePaletteConduitLabel": "Conduit",
+  "themePaletteConduitLabel": "Public AI",
   "@themePaletteConduitLabel": {
     "description": "Palette name for the default Conduit theme."
   },
-  "themePaletteConduitDescription": "Strak neutraal thema ontworpen voor Conduit.",
+  "themePaletteConduitDescription": "Strak neutraal thema ontworpen voor Public AI.",
   "@themePaletteConduitDescription": {
     "description": "Description of the Conduit palette."
   },
@@ -1104,7 +1098,7 @@
   "passwordUpdated": "Wachtwoord bijgewerkt.",
   "activeStatus": "Actief",
   "inactiveStatus": "Inactief",
-  "appInformation": "Conduit-app",
+  "appInformation": "Public AI-app",
   "appVersion": "Versie",
   "serverInformation": "Serverinformatie",
   "serverInfoUnavailable": "Serverinformatie is nu niet beschikbaar.",

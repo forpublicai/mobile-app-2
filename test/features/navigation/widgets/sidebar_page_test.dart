@@ -318,7 +318,7 @@ void main() {
       _buildSidebarHarness(controllers: controllers, currentUser: user),
     );
 
-    final brandTitle = tester.widget<Text>(find.text('Conduit'));
+    final brandTitle = tester.widget<Text>(find.text('Public AI'));
 
     expect(
       brandTitle.style?.fontSize,

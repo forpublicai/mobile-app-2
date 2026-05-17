@@ -358,13 +358,6 @@ class _ConduitAppState extends ConsumerState<ConduitApp> {
               sfSymbol: 'number',
               kind: NativeSheetItemKind.info,
             ),
-            NativeSheetItemConfig(
-              id: 'github',
-              title: l10n.githubRepository,
-              subtitle: 'github.com/cogwheel0/conduit',
-              sfSymbol: 'chevron.left.forwardslash.chevron.right',
-              url: 'https://github.com/cogwheel0/conduit',
-            ),
           ],
         ),
       );

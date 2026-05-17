@@ -176,7 +176,7 @@ class CallKitService {
     return CallKitParams(
       id: id,
       nameCaller: callerName,
-      appName: 'Conduit',
+      appName: 'Public AI',
       avatar: avatar,
       handle: handle,
       type: 0, // 0 = audio call

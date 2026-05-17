@@ -256,10 +256,10 @@ class BrandService {
   }
 
   /// Brand-specific semantic labels for accessibility
-  static String get brandName => 'Conduit';
-  static String get brandDescription => 'Your AI Conversation Hub';
-  static String get connectionLabel => 'Hub Connection';
-  static String get networkLabel => 'Network Hub';
+  static String get brandName => 'Public AI';
+  static String get brandDescription => 'Your AI assistant for Open WebUI';
+  static String get connectionLabel => 'Server connection';
+  static String get networkLabel => 'Network';
 
   /// Creates branded AppBar with consistent styling
   static PreferredSizeWidget createBrandAppBar({

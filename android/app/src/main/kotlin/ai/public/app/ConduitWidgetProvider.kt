@@ -1,4 +1,4 @@
-package app.cogwheel.conduit
+package ai.public.app
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -59,7 +59,7 @@ class ConduitWidgetProvider : AppWidgetProvider() {
                 HomeWidgetLaunchIntent.getActivity(
                     context,
                     MainActivity::class.java,
-                    Uri.parse("conduit://$ACTION_NEW_CHAT?homeWidget=true")
+                    Uri.parse("publicai://$ACTION_NEW_CHAT?homeWidget=true")
                 )
             )
             views.setOnClickPendingIntent(
@@ -67,7 +67,7 @@ class ConduitWidgetProvider : AppWidgetProvider() {
                 HomeWidgetLaunchIntent.getActivity(
                     context,
                     MainActivity::class.java,
-                    Uri.parse("conduit://$ACTION_NEW_CHAT?homeWidget=true")
+                    Uri.parse("publicai://$ACTION_NEW_CHAT?homeWidget=true")
                 )
             )
             views.setOnClickPendingIntent(
@@ -75,7 +75,7 @@ class ConduitWidgetProvider : AppWidgetProvider() {
                 HomeWidgetLaunchIntent.getActivity(
                     context,
                     MainActivity::class.java,
-                    Uri.parse("conduit://$ACTION_MIC?homeWidget=true")
+                    Uri.parse("publicai://$ACTION_MIC?homeWidget=true")
                 )
             )
             views.setOnClickPendingIntent(
@@ -83,7 +83,7 @@ class ConduitWidgetProvider : AppWidgetProvider() {
                 HomeWidgetLaunchIntent.getActivity(
                     context,
                     MainActivity::class.java,
-                    Uri.parse("conduit://$ACTION_CAMERA?homeWidget=true")
+                    Uri.parse("publicai://$ACTION_CAMERA?homeWidget=true")
                 )
             )
             views.setOnClickPendingIntent(
@@ -91,7 +91,7 @@ class ConduitWidgetProvider : AppWidgetProvider() {
                 HomeWidgetLaunchIntent.getActivity(
                     context,
                     MainActivity::class.java,
-                    Uri.parse("conduit://$ACTION_PHOTOS?homeWidget=true")
+                    Uri.parse("publicai://$ACTION_PHOTOS?homeWidget=true")
                 )
             )
             views.setOnClickPendingIntent(
@@ -99,7 +99,7 @@ class ConduitWidgetProvider : AppWidgetProvider() {
                 HomeWidgetLaunchIntent.getActivity(
                     context,
                     MainActivity::class.java,
-                    Uri.parse("conduit://$ACTION_CLIPBOARD?homeWidget=true")
+                    Uri.parse("publicai://$ACTION_CLIPBOARD?homeWidget=true")
                 )
             )
 

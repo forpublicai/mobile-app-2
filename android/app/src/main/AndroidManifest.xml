@@ -44,7 +44,7 @@
          ForegroundServiceDidNotStartInTimeException. This ensures channels exist before
          any foreground service attempts to use them. -->
     <application
-        android:label="Conduit"
+        android:label="Public AI"
         android:name=".ConduitApplication"
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="false"
@@ -112,7 +112,7 @@
         <activity
             android:name=".ProcessTextActivity"
             android:exported="true"
-            android:label="Ask Conduit"
+            android:label="Ask Public AI"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.PROCESS_TEXT" />

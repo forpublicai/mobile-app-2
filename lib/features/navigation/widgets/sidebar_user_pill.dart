@@ -232,26 +232,6 @@ class SidebarProfileAppBarLeading extends ConsumerWidget {
           ],
         ),
         NativeSheetSectionConfig(
-          title: l10n.supportConduit,
-          footer: l10n.supportConduitSubtitle,
-          items: [
-            NativeSheetItemConfig(
-              id: 'buy-me-a-coffee',
-              title: l10n.buyMeACoffeeTitle,
-              subtitle: 'buymeacoffee.com/cogwheel0',
-              sfSymbol: 'gift',
-              url: 'https://www.buymeacoffee.com/cogwheel0',
-            ),
-            NativeSheetItemConfig(
-              id: 'github-sponsors',
-              title: l10n.githubSponsorsTitle,
-              subtitle: 'github.com/sponsors/cogwheel0',
-              sfSymbol: 'heart',
-              url: 'https://github.com/sponsors/cogwheel0',
-            ),
-          ],
-        ),
-        NativeSheetSectionConfig(
           items: [
             NativeSheetItemConfig(
               id: NativeSheetRoutes.helpAbout,

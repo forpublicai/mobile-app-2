@@ -15,12 +15,12 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "app.cogwheel.conduit"
+    namespace = "ai.public.app"
     compileSdk = 36
     ndkVersion = "29.0.14206865"
 
     defaultConfig {
-    applicationId = "app.cogwheel.conduit"
+    applicationId = "ai.public.app"
     minSdk = flutter.minSdkVersion
     targetSdk = 36
     versionCode = flutter.versionCode

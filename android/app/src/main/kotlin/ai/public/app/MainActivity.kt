@@ -1,4 +1,4 @@
-package app.cogwheel.conduit
+package ai.public.app
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -24,7 +24,7 @@ class MainActivity : FlutterActivity() {
         windowInsetsController.isAppearanceLightNavigationBars = false
     }
     
-    private val CHANNEL = "app.cogwheel.conduit/assistant"
+    private val CHANNEL = "ai.public.app/assistant"
     private var methodChannel: io.flutter.plugin.common.MethodChannel? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
