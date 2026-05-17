@@ -645,7 +645,7 @@ struct StartVoiceCallIntent: AppIntent {
 }
 
 @available(iOS 16.0, *)
-struct Public AISendTextIntent: AppIntent {
+struct PublicAISendTextIntent: AppIntent {
     static var title: LocalizedStringResource = "Send to Public AI"
     static var description = IntentDescription(
         "Start a Public AI chat with provided text."
@@ -683,7 +683,7 @@ struct Public AISendTextIntent: AppIntent {
 }
 
 @available(iOS 16.0, *)
-struct Public AISendUrlIntent: AppIntent {
+struct PublicAISendUrlIntent: AppIntent {
     static var title: LocalizedStringResource = "Send Link to Public AI"
     static var description = IntentDescription(
         "Send a URL into Public AI for summary or analysis."
@@ -720,7 +720,7 @@ struct Public AISendUrlIntent: AppIntent {
 }
 
 @available(iOS 16.0, *)
-struct Public AISendImageIntent: AppIntent {
+struct PublicAISendImageIntent: AppIntent {
     static var title: LocalizedStringResource = "Send Image to Public AI"
     static var description = IntentDescription(
         "Send an image into Public AI for analysis."
@@ -790,7 +790,7 @@ struct AppShortcuts: AppShortcutsProvider {
                 ]
             ),
             AppShortcut(
-                intent: Public AISendTextIntent(),
+                intent: PublicAISendTextIntent(),
                 phrases: [
                     "Send text to \(.applicationName)",
                     "Share text with \(.applicationName)",
@@ -798,7 +798,7 @@ struct AppShortcuts: AppShortcutsProvider {
                 ]
             ),
             AppShortcut(
-                intent: Public AISendUrlIntent(),
+                intent: PublicAISendUrlIntent(),
                 phrases: [
                     "Summarize link in \(.applicationName)",
                     "Analyze link with \(.applicationName)",
@@ -806,7 +806,7 @@ struct AppShortcuts: AppShortcutsProvider {
                 ]
             ),
             AppShortcut(
-                intent: Public AISendImageIntent(),
+                intent: PublicAISendImageIntent(),
                 phrases: [
                     "Send image to \(.applicationName)",
                     "Analyze image with \(.applicationName)",

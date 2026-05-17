@@ -1,6 +1,6 @@
 //
-//  Public AIWidget.swift
-//  Public AIWidget
+//  PublicAIWidget.swift
+//  PublicAIWidget
 //
 //  Created by cogwheel on 07/12/25.
 //
@@ -10,24 +10,24 @@ import SwiftUI
 
 // MARK: - Timeline Entry
 
-struct Public AIEntry: TimelineEntry {
+struct PublicAIEntry: TimelineEntry {
     let date: Date
 }
 
 // MARK: - Timeline Provider
 
-struct Public AIProvider: TimelineProvider {
-    func placeholder(in context: Context) -> Public AIEntry {
-        Public AIEntry(date: Date())
+struct PublicAIProvider: TimelineProvider {
+    func placeholder(in context: Context) -> PublicAIEntry {
+        PublicAIEntry(date: Date())
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (ConduitEntry) -> Void) {
-        let entry = Public AIEntry(date: Date())
+    func getSnapshot(in context: Context, completion: @escaping (PublicAIEntry) -> Void) {
+        let entry = PublicAIEntry(date: Date())
         completion(entry)
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<ConduitEntry>) -> Void) {
-        let entry = Public AIEntry(date: Date())
+    func getTimeline(in context: Context, completion: @escaping (Timeline<PublicAIEntry>) -> Void) {
+        let entry = PublicAIEntry(date: Date())
         let timeline = Timeline(entries: [entry], policy: .never)
         completion(timeline)
     }
@@ -35,8 +35,8 @@ struct Public AIProvider: TimelineProvider {
 
 // MARK: - Widget View
 
-struct Public AIWidgetEntryView: View {
-    var entry: Public AIProvider.Entry
+struct PublicAIWidgetEntryView: View {
+    var entry: PublicAIProvider.Entry
     @Environment(\.widgetFamily) var family
     @Environment(\.colorScheme) var colorScheme
 
@@ -135,16 +135,16 @@ struct CircularIconButton: View {
 
 // MARK: - Widget Configuration
 
-struct Public AIWidget: Widget {
+struct PublicAIWidget: Widget {
     let kind: String = "ConduitWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Public AIProvider()) { entry in
+        StaticConfiguration(kind: kind, provider: PublicAIProvider()) { entry in
             if #available(iOS 17.0, *) {
-                Public AIWidgetEntryView(entry: entry)
+                PublicAIWidgetEntryView(entry: entry)
                     .containerBackground(Color("WidgetBackground"), for: .widget)
             } else {
-                Public AIWidgetEntryView(entry: entry)
+                PublicAIWidgetEntryView(entry: entry)
                     .background(Color("WidgetBackground"))
             }
         }
@@ -158,8 +158,8 @@ struct Public AIWidget: Widget {
 // MARK: - Preview
 
 #Preview(as: .systemMedium) {
-    Public AIWidget()
+    PublicAIWidget()
 } timeline: {
-    Public AIEntry(date: .now)
+    PublicAIEntry(date: .now)
 }
 

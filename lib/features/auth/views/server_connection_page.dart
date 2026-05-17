@@ -5,7 +5,7 @@ import 'dart:io'
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart' show kIsWeb, visibleForTesting;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,6 +30,11 @@ import '../../../shared/widgets/adaptive_route_shell.dart';
 import '../../../shared/widgets/conduit_components.dart';
 import 'proxy_auth_page.dart';
 
+const publicAiInferenceUtilityUrl = 'https://chat.publicai.co';
+
+@visibleForTesting
+String defaultServerConnectionUrl() => publicAiInferenceUtilityUrl;
+
 class ServerConnectionPage extends ConsumerStatefulWidget {
   const ServerConnectionPage({super.key});
 
@@ -40,7 +45,9 @@ class ServerConnectionPage extends ConsumerStatefulWidget {
 
 class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _urlController = TextEditingController();
+  final TextEditingController _urlController = TextEditingController(
+    text: defaultServerConnectionUrl(),
+  );
   final Map<String, String> _customHeaders = {};
   final TextEditingController _headerKeyController = TextEditingController();
   final TextEditingController _headerValueController = TextEditingController();

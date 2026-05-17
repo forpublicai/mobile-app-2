@@ -1,6 +1,6 @@
 //
-//  Public AIWidgetBundle.swift
-//  Public AIWidget
+//  PublicAIWidgetBundle.swift
+//  PublicAIWidget
 //
 //  Created by cogwheel on 07/12/25.
 //
@@ -9,8 +9,8 @@ import WidgetKit
 import SwiftUI
 
 @main
-struct Public AIWidgetBundle: WidgetBundle {
+struct PublicAIWidgetBundle: WidgetBundle {
     var body: some Widget {
-        Public AIWidget()
+        PublicAIWidget()
     }
 }
