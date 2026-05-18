@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../config/public_ai_server.dart';
 import '../services/api_service.dart';
 import '../auth/auth_state_manager.dart';
 import '../../features/auth/providers/unified_auth_providers.dart';
@@ -179,7 +180,7 @@ Future<ServerConfig?> activeServer(Ref ref) async {
   final configs = await ref.watch(serverConfigsProvider.future);
   final activeId = await storage.getActiveServerId();
 
-  if (configs.isEmpty) return null;
+  if (configs.isEmpty) return publicAiDefaultServerConfig;
 
   ServerConfig? fallback;
   for (final config in configs) {

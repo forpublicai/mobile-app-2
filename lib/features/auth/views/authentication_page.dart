@@ -53,21 +53,26 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
   String? _loginError;
   bool _isSigningIn = false;
   bool _serverConfigSaved = false;
+  BackendConfig? _loadedBackendConfig;
+  ProviderSubscription<AsyncValue<BackendConfig?>>? _backendConfigSubscription;
+
+  BackendConfig? get _effectiveBackendConfig =>
+      widget.backendConfig ?? _loadedBackendConfig;
 
   /// Whether the server has OAuth/SSO providers configured.
   bool get _hasSsoEnabled =>
-      widget.backendConfig?.hasSsoEnabled == true && isWebViewSupported;
+      _effectiveBackendConfig?.hasSsoEnabled == true && isWebViewSupported;
 
   /// Whether LDAP authentication is enabled on the server.
-  bool get _hasLdapEnabled => widget.backendConfig?.enableLdap == true;
+  bool get _hasLdapEnabled => _effectiveBackendConfig?.enableLdap == true;
 
   /// Whether the login form (email/password) is enabled on the server.
   bool get _hasLoginFormEnabled =>
-      widget.backendConfig?.enableLoginForm ?? true;
+      _effectiveBackendConfig?.enableLoginForm ?? true;
 
   /// OAuth providers available on the server.
   OAuthProviders get _oauthProviders =>
-      widget.backendConfig?.oauthProviders ?? const OAuthProviders();
+      _effectiveBackendConfig?.oauthProviders ?? const OAuthProviders();
 
   /// Available auth modes for the segmented control.
   List<AuthMode> get _availableAuthModes {
@@ -97,7 +102,22 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
   @override
   void initState() {
     super.initState();
+    _loadedBackendConfig = widget.backendConfig;
     _setDefaultAuthMode();
+    if (widget.backendConfig == null) {
+      _backendConfigSubscription = ref.listenManual<AsyncValue<BackendConfig?>>(
+        backendConfigProvider,
+        (_, next) {
+          final config = next.asData?.value;
+          if (config == null || !mounted) return;
+          setState(() {
+            _loadedBackendConfig = config;
+            _setDefaultAuthModeIfNeeded();
+          });
+        },
+        fireImmediately: true,
+      );
+    }
     _loadSavedCredentials();
     // Check for auth errors (e.g., forced logout due to API key)
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -119,6 +139,14 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
       // Fallback to token if nothing else is enabled
       _authMode = AuthMode.token;
     }
+  }
+
+  void _setDefaultAuthModeIfNeeded() {
+    final modes = _availableAuthModes;
+    if (modes.contains(_authMode)) {
+      return;
+    }
+    _setDefaultAuthMode();
   }
 
   void _checkAuthStateError() {
@@ -146,6 +174,7 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
 
   @override
   void dispose() {
+    _backendConfigSubscription?.close();
     _usernameController.dispose();
     _passwordController.dispose();
     _apiKeyController.dispose();

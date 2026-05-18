@@ -15,6 +15,7 @@ import 'package:uuid/uuid.dart';
 import 'package:conduit/l10n/app_localizations.dart';
 
 import '../../../core/auth/webview_cookie_helper.dart';
+import '../../../core/config/public_ai_server.dart';
 import '../../../core/models/server_config.dart';
 import '../../../core/providers/app_providers.dart';
 import '../../../core/services/api_service.dart';
@@ -30,10 +31,8 @@ import '../../../shared/widgets/adaptive_route_shell.dart';
 import '../../../shared/widgets/conduit_components.dart';
 import 'proxy_auth_page.dart';
 
-const publicAiInferenceUtilityUrl = 'https://chat.publicai.co';
-
 @visibleForTesting
-String defaultServerConnectionUrl() => publicAiInferenceUtilityUrl;
+String defaultServerConnectionUrl() => publicAiServerUrl;
 
 class ServerConnectionPage extends ConsumerStatefulWidget {
   const ServerConnectionPage({super.key});

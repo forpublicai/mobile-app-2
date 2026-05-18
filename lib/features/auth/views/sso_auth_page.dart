@@ -2,7 +2,7 @@ import 'dart:io' show Platform;
 
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart' show kIsWeb, visibleForTesting;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -18,6 +18,22 @@ import '../../../shared/widgets/adaptive_route_shell.dart';
 import '../../../shared/widgets/conduit_components.dart';
 import 'package:conduit/l10n/app_localizations.dart';
 import '../providers/unified_auth_providers.dart';
+
+@visibleForTesting
+bool isGooglePasskeyChallengeErrorUrl(String url) {
+  final uri = Uri.tryParse(url);
+  if (uri == null || uri.host != 'accounts.google.com') {
+    return false;
+  }
+
+  final path = uri.path;
+  if (path.contains('/signin/challenge/pk/error')) {
+    return true;
+  }
+
+  final tag = uri.queryParameters['tag'] ?? '';
+  return tag.contains('passkey_first_auth_factor_error');
+}
 
 /// SSO Authentication page that uses a WebView to handle OAuth/OIDC flows.
 ///
@@ -155,6 +171,8 @@ class _SsoAuthPageState extends ConsumerState<SsoAuthPage> {
     final url = change.url;
     if (url == null) return;
     DebugLogger.auth('SSO URL changed: $url');
+
+    if (_handleGooglePasskeyChallengeError(url)) return;
 
     // Try to capture token on URL change as well
     if (_tokenCaptured) return;
@@ -418,6 +436,26 @@ class _SsoAuthPageState extends ConsumerState<SsoAuthPage> {
     }
   }
 
+  bool _handleGooglePasskeyChallengeError(String url) {
+    if (!isGooglePasskeyChallengeErrorUrl(url)) {
+      return false;
+    }
+
+    DebugLogger.error(
+      'google-passkey-webview-auth-failed',
+      scope: 'auth/sso',
+      data: {'url': url},
+    );
+
+    if (!mounted) return true;
+    setState(() {
+      _error = 'Google passkey sign-in failed inside the in-app browser. '
+          'Tap Retry and choose another Google sign-in method, or use email/password if your account allows it.';
+      _isLoading = false;
+    });
+    return true;
+  }
+
   void _onWebResourceError(WebResourceError error) {
     DebugLogger.error(
       'sso-webview-error',
@@ -441,6 +479,10 @@ class _SsoAuthPageState extends ConsumerState<SsoAuthPage> {
   NavigationDecision _onNavigationRequest(NavigationRequest request) {
     final url = request.url;
     DebugLogger.auth('SSO navigation request: $url');
+
+    if (_handleGooglePasskeyChallengeError(url)) {
+      return NavigationDecision.prevent;
+    }
 
     // Allow all navigation - OAuth flows require redirects to external
     // identity providers and back. The WebView is sandboxed and the token
