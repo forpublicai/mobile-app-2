@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../auth/auth_state_manager.dart';
+import '../config/public_ai_server.dart';
 import '../providers/app_providers.dart';
 import '../services/connectivity_service.dart';
 import '../services/navigation_service.dart';
@@ -119,13 +120,8 @@ class RouterNotifier extends ChangeNotifier {
     final authState = ref.read(authNavigationStateProvider);
     final connectivityService = ref.read(connectivityServiceProvider);
 
-    // Allow staying on server connection page
     if (location == Routes.serverConnection) {
-      // If authenticated but on server connection page, go to chat
-      // Otherwise stay on server connection page (for back navigation)
-      return authState == AuthNavigationState.authenticated
-          ? Routes.chat
-          : null;
+      return serverConnectionRedirect(activeServer, authState);
     }
 
     // Check connectivity status to determine if we should show connection issue
@@ -158,6 +154,9 @@ class RouterNotifier extends ChangeNotifier {
         return location == Routes.splash ? null : Routes.splash;
       case AuthNavigationState.needsLogin:
         if (location == Routes.connectionIssue) return null;
+        if (isPublicAiServer(activeServer)) {
+          return location == Routes.ssoAuth ? null : Routes.ssoAuth;
+        }
         // Redirect to authentication page if not already on an auth route
         // This handles the post-logout case where we want sign-in, not server setup
         if (_isAuthLocation(location)) return null;
@@ -189,8 +188,7 @@ class RouterNotifier extends ChangeNotifier {
   }
 
   bool _isAuthLocation(String location) {
-    return location == Routes.serverConnection ||
-        location == Routes.login ||
+    return location == Routes.login ||
         location == Routes.authentication ||
         location == Routes.connectionIssue ||
         location == Routes.ssoAuth ||
@@ -205,6 +203,26 @@ class RouterNotifier extends ChangeNotifier {
     }
     super.dispose();
   }
+}
+
+String? serverConnectionRedirect(
+  ServerConfig activeServer,
+  AuthNavigationState authState,
+) {
+  if (isPublicAiServer(activeServer)) {
+    return authState == AuthNavigationState.authenticated
+        ? Routes.chat
+        : Routes.ssoAuth;
+  }
+
+  // Custom/developer servers may still use the manual connection fallback.
+  return authState == AuthNavigationState.authenticated ? Routes.chat : null;
+}
+
+bool isPublicAiServer(ServerConfig server) {
+  final uri = Uri.tryParse(server.url);
+  return uri?.scheme == 'https' &&
+      uri?.host == Uri.parse(publicAiServerUrl).host;
 }
 
 final routerNotifierProvider = Provider<RouterNotifier>((ref) {

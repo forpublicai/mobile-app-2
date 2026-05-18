@@ -16,4 +16,16 @@ void main() {
       expect(isGooglePasskeyChallengeErrorUrl(url), isFalse);
     });
   });
+
+  group('redactSsoUrlForLog', () {
+    test('removes query and fragment values from auth URLs', () {
+      const url =
+          'https://accounts.google.com/oauth?code=secret-code&state=secret-state#token=secret-token';
+
+      expect(
+        redactSsoUrlForLog(url),
+        'https://accounts.google.com/oauth?query=<redacted>&fragment=<redacted>',
+      );
+    });
+  });
 }

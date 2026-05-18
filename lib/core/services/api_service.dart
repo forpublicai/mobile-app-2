@@ -637,6 +637,31 @@ class ApiService {
   }
 
   // Authentication
+  Future<String> exchangeMobileOAuthCode({
+    required String code,
+    required String state,
+    required Uri redirectUri,
+  }) async {
+    final response = await _dio.post(
+      '/api/mobile/oauth/exchange',
+      data: {
+        'code': code,
+        'state': state,
+        'redirect_uri': redirectUri.toString(),
+      },
+    );
+
+    final data = response.data;
+    if (data is Map<String, dynamic>) {
+      final token = data['token'];
+      if (token is String && token.isNotEmpty) {
+        return token;
+      }
+    }
+
+    throw StateError('Mobile OAuth exchange response did not include a token.');
+  }
+
   Future<Map<String, dynamic>> login(String username, String password) async {
     try {
       final response = await _dio.post(

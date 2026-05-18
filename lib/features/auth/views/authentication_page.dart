@@ -6,17 +6,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/config/public_ai_server.dart';
 import '../../../core/models/backend_config.dart';
 import '../../../core/models/server_config.dart';
 import '../../../core/providers/app_providers.dart';
 import '../../../core/services/input_validation_service.dart';
 import '../../../core/services/navigation_service.dart';
+import '../../../core/services/worker_manager.dart';
 import '../../../core/widgets/error_boundary.dart';
 import '../../../shared/services/brand_service.dart';
 import '../../../shared/theme/theme_extensions.dart';
 import '../../../shared/widgets/adaptive_route_shell.dart';
 import '../../../shared/widgets/conduit_components.dart';
 import '../../../core/auth/auth_state_manager.dart';
+import '../../../core/auth/mobile_oauth_bridge.dart';
+import '../../../core/auth/native_browser_auth.dart';
+import '../../../core/services/api_service.dart';
 import '../../../core/utils/debug_logger.dart';
 import 'package:conduit/l10n/app_localizations.dart';
 import '../providers/unified_auth_providers.dart';
@@ -122,6 +127,7 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
     // Check for auth errors (e.g., forced logout due to API key)
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkAuthStateError();
+      _consumePendingNativeSsoCallback();
     });
   }
 
@@ -377,6 +383,22 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
   }
 
   Widget _buildBackButton() {
+    final activeServerAsync = ref.watch(activeServerProvider);
+    final activeServer =
+        widget.serverConfig ??
+        activeServerAsync.maybeWhen(data: (s) => s, orElse: () => null);
+    final activeServerUrl = activeServer == null
+        ? null
+        : Uri.tryParse(activeServer.url);
+    final publicAiUrl = Uri.parse(publicAiServerUrl);
+    final isPublicAiDefault =
+        activeServerUrl?.scheme == publicAiUrl.scheme &&
+        activeServerUrl?.host == publicAiUrl.host;
+
+    if (isPublicAiDefault) {
+      return const SizedBox(width: 40, height: 40);
+    }
+
     return GestureDetector(
       onTap: () => context.go(Routes.serverConnection),
       child: Container(
@@ -638,7 +660,7 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
     return ConduitButton(
       text: l10n.continueWithProvider(displayName),
       icon: icon,
-      onPressed: _navigateToSso,
+      onPressed: _isSigningIn ? null : () => _navigateToNativeSso(provider),
       isSecondary: true,
       isFullWidth: true,
     );
@@ -913,6 +935,136 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
         ),
       ],
     );
+  }
+
+  Future<void> _consumePendingNativeSsoCallback() async {
+    try {
+      final pending = await const NativeBrowserAuth().consumePendingCallback();
+      if (pending == null || !mounted) return;
+      final expectedState = pending.state;
+      if (expectedState == null || expectedState.isEmpty) {
+        throw const NativeBrowserAuthException(
+          'Pending OAuth state was not found',
+        );
+      }
+      await _completeNativeSsoCallback(
+        pending.uri,
+        expectedState: expectedState,
+      );
+    } catch (e) {
+      DebugLogger.error(
+        'pending-native-sso-callback-failed',
+        scope: 'auth/sso',
+        error: e,
+      );
+      if (!mounted) return;
+      setState(() {
+        _loginError = 'Could not complete native sign-in. Please try again.';
+      });
+    }
+  }
+
+  Future<void> _completeNativeSsoCallback(
+    Uri callbackUri, {
+    required String expectedState,
+  }) async {
+    final callback = MobileOAuthBridge.parseCallback(
+      callbackUri,
+      expectedState: expectedState,
+    );
+
+    if (callback.isError) {
+      throw NativeBrowserAuthException(
+        callback.errorDescription ?? callback.error ?? 'OAuth failed',
+      );
+    }
+
+    final code = callback.code;
+    if (code == null || code.isEmpty) {
+      throw const NativeBrowserAuthException(
+        'OAuth callback did not include a code',
+      );
+    }
+
+    final activeServer =
+        widget.serverConfig ?? await ref.read(activeServerProvider.future);
+    if (activeServer == null) {
+      throw const NativeBrowserAuthException('No server configured');
+    }
+
+    final api = ApiService(
+      serverConfig: activeServer,
+      workerManager: ref.read(workerManagerProvider),
+    );
+    final token = await api.exchangeMobileOAuthCode(
+      code: code,
+      state: expectedState,
+      redirectUri: MobileOAuthBridge.callbackUri,
+    );
+
+    final success = await ref
+        .read(authActionsProvider)
+        .loginWithApiKey(token, rememberCredentials: true, authType: 'sso');
+    if (!success) {
+      throw const NativeBrowserAuthException('SSO authentication failed');
+    }
+  }
+
+  Future<void> _navigateToNativeSso(String provider) async {
+    if (!mounted) return;
+
+    setState(() {
+      _isSigningIn = true;
+      _loginError = null;
+    });
+
+    try {
+      if (widget.serverConfig != null && !_serverConfigSaved) {
+        await _saveServerConfig(widget.serverConfig!);
+        _serverConfigSaved = true;
+        if (!mounted) return;
+      }
+
+      final activeServer =
+          widget.serverConfig ?? await ref.read(activeServerProvider.future);
+      if (activeServer == null) {
+        throw const NativeBrowserAuthException('No server configured');
+      }
+
+      final state = MobileOAuthBridge.createState();
+      final startUri = MobileOAuthBridge.buildStartUri(
+        serverUri: Uri.parse(activeServer.url),
+        provider: provider,
+        state: state,
+      );
+
+      final callbackUri = await const NativeBrowserAuth().authenticate(
+        startUri: startUri,
+        callbackScheme: MobileOAuthBridge.callbackScheme,
+        state: state,
+      );
+      await _completeNativeSsoCallback(callbackUri, expectedState: state);
+    } catch (e) {
+      DebugLogger.error(
+        'native-sso-failed-falling-back-to-webview',
+        scope: 'auth/sso',
+        error: e,
+      );
+      if (!mounted) return;
+      setState(() {
+        _loginError =
+            'Native sign-in is not available yet. Opening web sign-in fallback.';
+        _isSigningIn = false;
+      });
+      await _navigateToSso();
+      return;
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSigningIn = false;
+        });
+      }
+    }
   }
 
   Future<void> _navigateToSso() async {

@@ -871,6 +871,11 @@ struct AppShortcuts: AppShortcutsProvider {
       messenger: nativeDropdownRegistrar.messenger()
     )
 
+    let nativeBrowserAuthRegistrar = engineBridge.applicationRegistrar
+    NativeBrowserAuthBridge.shared.configure(
+      messenger: nativeBrowserAuthRegistrar.messenger()
+    )
+
     // Setup background streaming handler
     let bgRegistrar = engineBridge.applicationRegistrar
     let channel = FlutterMethodChannel(

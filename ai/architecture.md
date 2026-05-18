@@ -78,4 +78,7 @@ Prefer the simplest durable foundation that meets current requirements.
 
 ## Decision log
 
+- `ai/decisions/ADR-0001-default-public-ai-server.md`
+- `ai/decisions/ADR-0002-native-browser-oauth-callback-bridge.md`
+- `ai/tasks/openwebui-mobile-oauth-server-bridge.md`
 - `ai/decisions/ADR_TEMPLATE.md`

@@ -35,6 +35,20 @@ bool isGooglePasskeyChallengeErrorUrl(String url) {
   return tag.contains('passkey_first_auth_factor_error');
 }
 
+@visibleForTesting
+String redactSsoUrlForLog(String url) {
+  final uri = Uri.tryParse(url);
+  if (uri == null) return '<invalid-url>';
+
+  final originAndPath = '${uri.scheme}://${uri.host}${uri.path}';
+  if (!uri.hasQuery && uri.fragment.isEmpty) return originAndPath;
+
+  final parts = <String>[];
+  if (uri.hasQuery) parts.add('query=<redacted>');
+  if (uri.fragment.isNotEmpty) parts.add('fragment=<redacted>');
+  return '$originAndPath?${parts.join('&')}';
+}
+
 /// SSO Authentication page that uses a WebView to handle OAuth/OIDC flows.
 ///
 /// This page loads the Open-WebUI `/auth` page in a WebView, allowing users
@@ -157,7 +171,7 @@ class _SsoAuthPageState extends ConsumerState<SsoAuthPage> {
   }
 
   void _onPageStarted(String url) {
-    DebugLogger.auth('SSO page started: $url');
+    DebugLogger.auth('SSO page started: ${redactSsoUrlForLog(url)}');
     // Increment attempt ID to cancel any in-progress retry sequences
     _captureAttemptId++;
     setState(() {
@@ -170,7 +184,7 @@ class _SsoAuthPageState extends ConsumerState<SsoAuthPage> {
   Future<void> _onUrlChange(UrlChange change) async {
     final url = change.url;
     if (url == null) return;
-    DebugLogger.auth('SSO URL changed: $url');
+    DebugLogger.auth('SSO URL changed: ${redactSsoUrlForLog(url)}');
 
     if (_handleGooglePasskeyChallengeError(url)) return;
 
@@ -191,7 +205,7 @@ class _SsoAuthPageState extends ConsumerState<SsoAuthPage> {
   }
 
   Future<void> _onPageFinished(String url) async {
-    DebugLogger.auth('SSO page finished: $url');
+    DebugLogger.auth('SSO page finished: ${redactSsoUrlForLog(url)}');
 
     setState(() {
       _isLoading = false;
@@ -449,7 +463,8 @@ class _SsoAuthPageState extends ConsumerState<SsoAuthPage> {
 
     if (!mounted) return true;
     setState(() {
-      _error = 'Google passkey sign-in failed inside the in-app browser. '
+      _error =
+          'Google passkey sign-in failed inside the in-app browser. '
           'Tap Retry and choose another Google sign-in method, or use email/password if your account allows it.';
       _isLoading = false;
     });
@@ -478,7 +493,7 @@ class _SsoAuthPageState extends ConsumerState<SsoAuthPage> {
 
   NavigationDecision _onNavigationRequest(NavigationRequest request) {
     final url = request.url;
-    DebugLogger.auth('SSO navigation request: $url');
+    DebugLogger.auth('SSO navigation request: ${redactSsoUrlForLog(url)}');
 
     if (_handleGooglePasskeyChallengeError(url)) {
       return NavigationDecision.prevent;
