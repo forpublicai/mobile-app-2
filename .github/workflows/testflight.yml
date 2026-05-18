@@ -49,8 +49,12 @@ jobs:
 
       - name: Install CocoaPods dependencies
         run: |
+          cat > /tmp/xcodeproj_object_version_70_patch.rb <<'RUBY'
+          require 'xcodeproj'
+          Xcodeproj::Constants::COMPATIBILITY_VERSION_BY_OBJECT_VERSION[70] ||= 'Xcode 16.0'
+          RUBY
           cd ios
-          pod install
+          RUBYOPT="-r/tmp/xcodeproj_object_version_70_patch" pod install
 
       - name: Install Apple signing assets
         shell: bash
