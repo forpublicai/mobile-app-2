@@ -39,6 +39,8 @@ jobs:
         #1 Checkout Repository
       - name: Checkout Repository
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0 # full history so the build number can be derived from commit count
 
         #2 Setup Java
       - name: Set Up Java
@@ -78,11 +80,14 @@ jobs:
           ANDROID_KEY_PROPERTIES_BASE64: ${{ secrets.ANDROID_KEY_PROPERTIES_BASE64 }}
         working-directory: android
       
+      # Build number = total commit count, so every build is uniquely and
+      # monotonically numbered without a manual bump. The version name still
+      # comes from pubspec.yaml.
       - name: Build APK
-        run: flutter build apk --split-per-abi --release
+        run: flutter build apk --split-per-abi --release --build-number=$(git rev-list --count HEAD)
 
       - name: Build appBundle
-        run: flutter build appbundle --release
+        run: flutter build appbundle --release --build-number=$(git rev-list --count HEAD)
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
@@ -118,6 +123,8 @@ jobs:
         #1 Checkout Repository
       - name: Checkout Repository
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0 # full history so the build number can be derived from commit count
 
         #2 Setup Flutter
       - name: Set Up Flutter
@@ -166,9 +173,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-xcode-
 
+      # Build number = total commit count (see build-android job).
       - name: Build iOS App
         run: |
-          flutter build ios --release --no-codesign
+          flutter build ios --release --no-codesign --build-number=$(git rev-list --count HEAD)
 
         #7 Create IPA from App Bundle
       - name: Create IPA

@@ -37,6 +37,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history so the build number can be derived from commit count
 
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
@@ -147,11 +149,26 @@ jobs:
           </plist>
           PLIST
 
+      # App Store Connect rejects uploads when an embedded extension's version
+      # does not match the main app. The ConduitWidget and ShareExtension targets
+      # use GENERATE_INFOPLIST_FILE, so their CFBundleVersion / CFBundleShortVersionString
+      # come from these build settings — stamp them to match the Runner app.
+      # (Runner itself derives its version from Flutter, so it is left untouched.)
+      - name: Match app extension versions to the app
+        run: |
+          set -euo pipefail
+          BUILD_NUMBER="$(git rev-list --count HEAD)"
+          VERSION_NAME="$(grep '^version:' pubspec.yaml | sed -E 's/^version:[[:space:]]*//; s/\+.*//')"
+          echo "Stamping iOS extensions -> version ${VERSION_NAME}, build ${BUILD_NUMBER}"
+          perl -0pi -e "s/CURRENT_PROJECT_VERSION = 1;/CURRENT_PROJECT_VERSION = ${BUILD_NUMBER};/g; s/MARKETING_VERSION = 1\.0;/MARKETING_VERSION = ${VERSION_NAME};/g" ios/Runner.xcodeproj/project.pbxproj
+
+      # Build number = total commit count: unique and monotonic per upload,
+      # independent of Android. The version name comes from pubspec.yaml.
       - name: Build signed IPA
         run: |
           flutter build ipa \
             --release \
-            --build-number "$GITHUB_RUN_NUMBER" \
+            --build-number "$(git rev-list --count HEAD)" \
             --export-options-plist=ios/ExportOptions.plist
 
       - name: Upload IPA artifact
