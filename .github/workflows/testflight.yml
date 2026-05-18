@@ -4,6 +4,14 @@ on:
   push:
     branches:
       - main
+    paths:
+      - '.github/workflows/testflight.yml'
+      - 'assets/**'
+      - 'ci_scripts/**'
+      - 'ios/**'
+      - 'lib/**'
+      - 'pubspec.lock'
+      - 'pubspec.yaml'
   workflow_dispatch:
 
 concurrency:
