@@ -77,6 +77,11 @@ app.*.map.json
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 
+# Xcode user-specific state (any .xcodeproj/.xcworkspace, including ones outside ios/)
+*.xcuserstate
+*.xcuserdatad/
+**/xcuserdata/
+
 # macOS
 **/macos/Flutter/GeneratedPluginRegistrant.swift
 **/macos/Flutter/ephemeral
@@ -90,10 +95,13 @@ coverage/
 *.bak
 *.orig
 
-# Environment files
+# Environment files (catch every variant; keep committed example files)
 .env
-.env.local
-.env.production
+.env.*
+*.env
+!.env.example
+!.env.sample
+!.env.template
 
 # Generated files
 *.g.dart
