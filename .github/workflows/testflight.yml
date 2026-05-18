@@ -51,7 +51,10 @@ jobs:
         run: |
           cat > /tmp/xcodeproj_object_version_70_patch.rb <<'RUBY'
           require 'xcodeproj'
-          Xcodeproj::Constants::COMPATIBILITY_VERSION_BY_OBJECT_VERSION[70] ||= 'Xcode 16.0'
+          compat = Xcodeproj::Constants::COMPATIBILITY_VERSION_BY_OBJECT_VERSION.dup
+          compat[70] ||= 'Xcode 16.0'
+          Xcodeproj::Constants.send(:remove_const, :COMPATIBILITY_VERSION_BY_OBJECT_VERSION)
+          Xcodeproj::Constants.const_set(:COMPATIBILITY_VERSION_BY_OBJECT_VERSION, compat.freeze)
           RUBY
           cd ios
           RUBYOPT="-r/tmp/xcodeproj_object_version_70_patch" pod install
