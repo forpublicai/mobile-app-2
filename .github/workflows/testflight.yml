@@ -1,0 +1,154 @@
+name: TestFlight
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: testflight-main
+  cancel-in-progress: true
+
+jobs:
+  upload-testflight:
+    name: Build and upload to TestFlight
+    runs-on: macos-latest
+    timeout-minutes: 60
+
+    env:
+      APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+      APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+      APP_STORE_CONNECT_API_KEY_P8: ${{ secrets.APP_STORE_CONNECT_API_KEY_P8 }}
+      IOS_DISTRIBUTION_CERTIFICATE_BASE64: ${{ secrets.IOS_DISTRIBUTION_CERTIFICATE_BASE64 }}
+      IOS_DISTRIBUTION_CERTIFICATE_PASSWORD: ${{ secrets.IOS_DISTRIBUTION_CERTIFICATE_PASSWORD }}
+      IOS_PROFILE_RUNNER_BASE64: ${{ secrets.IOS_PROFILE_RUNNER_BASE64 }}
+      IOS_PROFILE_SHARE_EXTENSION_BASE64: ${{ secrets.IOS_PROFILE_SHARE_EXTENSION_BASE64 }}
+      IOS_PROFILE_WIDGET_BASE64: ${{ secrets.IOS_PROFILE_WIDGET_BASE64 }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install Flutter dependencies
+        run: flutter pub get
+
+      - name: Generate Dart code
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Install CocoaPods dependencies
+        run: |
+          cd ios
+          pod install
+
+      - name: Install Apple signing assets
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          KEYCHAIN_PASSWORD="$(uuidgen)"
+          KEYCHAIN_PATH="$RUNNER_TEMP/app-signing.keychain-db"
+          CERTIFICATE_PATH="$RUNNER_TEMP/ios_distribution.p12"
+          PROFILES_DIR="$HOME/Library/MobileDevice/Provisioning Profiles"
+
+          mkdir -p "$PROFILES_DIR"
+
+          echo "$IOS_DISTRIBUTION_CERTIFICATE_BASE64" | base64 --decode > "$CERTIFICATE_PATH"
+
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security import "$CERTIFICATE_PATH" \
+            -P "$IOS_DISTRIBUTION_CERTIFICATE_PASSWORD" \
+            -A \
+            -t cert \
+            -f pkcs12 \
+            -k "$KEYCHAIN_PATH"
+          security list-keychain -d user -s "$KEYCHAIN_PATH"
+          security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+
+          install_profile() {
+            local secret_value="$1"
+            local profile_name="$2"
+            local profile_path="$RUNNER_TEMP/${profile_name}.mobileprovision"
+            local plist_path="$RUNNER_TEMP/${profile_name}.plist"
+            echo "$secret_value" | base64 --decode > "$profile_path"
+            security cms -D -i "$profile_path" > "$plist_path"
+            local uuid
+            uuid=$(/usr/libexec/PlistBuddy -c 'Print UUID' "$plist_path")
+            cp "$profile_path" "$PROFILES_DIR/${uuid}.mobileprovision"
+            echo "Installed provisioning profile: ${profile_name} (${uuid})"
+          }
+
+          install_profile "$IOS_PROFILE_RUNNER_BASE64" "runner"
+          install_profile "$IOS_PROFILE_SHARE_EXTENSION_BASE64" "share_extension"
+          install_profile "$IOS_PROFILE_WIDGET_BASE64" "widget"
+
+      - name: Write App Store Connect API key
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.appstoreconnect/private_keys"
+          API_KEY_PATH="$HOME/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8"
+          printf '%s' "$APP_STORE_CONNECT_API_KEY_P8" > "$API_KEY_PATH"
+          chmod 600 "$API_KEY_PATH"
+
+      - name: Write export options
+        run: |
+          cat > ios/ExportOptions.plist <<'PLIST'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store-connect</string>
+            <key>signingStyle</key>
+            <string>manual</string>
+            <key>teamID</key>
+            <string>C9QTQY9BZ2</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>com.publicai.chat</key>
+              <string>PublicAI AppStore Runner</string>
+              <key>com.publicai.chat.ShareExtension</key>
+              <string>PublicAI AppStore ShareExtension</string>
+              <key>com.publicai.chat.ConduitWidget</key>
+              <string>PublicAI AppStore ConduitWidget</string>
+            </dict>
+            <key>uploadSymbols</key>
+            <true/>
+          </dict>
+          </plist>
+          PLIST
+
+      - name: Build signed IPA
+        run: |
+          flutter build ipa \
+            --release \
+            --build-number "$GITHUB_RUN_NUMBER" \
+            --export-options-plist=ios/ExportOptions.plist
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: testflight-ipa
+          path: build/ios/ipa/*.ipa
+
+      - name: Upload to TestFlight
+        run: |
+          xcrun altool --upload-app \
+            --type ios \
+            --file build/ios/ipa/*.ipa \
+            --apiKey "$APP_STORE_CONNECT_KEY_ID" \
+            --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID"
