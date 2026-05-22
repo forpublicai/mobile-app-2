@@ -124,12 +124,14 @@ lib/l10n/app_localizations_*.dart
 google-services.json
 GoogleService-Info.plist
 
-# Keystore files
+# Android signing/export files
 *.keystore
 *.jks
+**/android/upload_certificate.pem
 
-# Gradle files
+# Gradle / Android generated files
 .gradle/
+**/android/build/
 **/android/gradle-wrapper.jar
 **/android/.gradle
 **/android/captures/

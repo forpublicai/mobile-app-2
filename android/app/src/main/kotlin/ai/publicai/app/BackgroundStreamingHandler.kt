@@ -1,4 +1,4 @@
-package ai.public.app
+package ai.publicai.app
 
 import android.app.Notification
 import android.app.NotificationChannel

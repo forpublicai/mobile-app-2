@@ -45,13 +45,13 @@
          any foreground service attempts to use them. -->
     <application
         android:label="Public AI"
-        android:name=".ConduitApplication"
+        android:name="ai.publicai.app.ConduitApplication"
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="false"
         android:fullBackupContent="false"
         android:usesCleartextTraffic="true">
         <service
-            android:name=".ConduitVoiceInteractionSessionService"
+            android:name="ai.publicai.app.ConduitVoiceInteractionSessionService"
             android:permission="android.permission.BIND_VOICE_INTERACTION"
             android:exported="true">
             <meta-data
@@ -63,7 +63,7 @@
         </service>
 
         <activity
-            android:name=".MainActivity"
+            android:name="ai.publicai.app.MainActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:theme="@style/LaunchTheme"
@@ -121,7 +121,7 @@
              It forwards the selected text into our existing share flow so the
              Dart share handler receives it just like a regular share. -->
         <activity
-            android:name=".ProcessTextActivity"
+            android:name="ai.publicai.app.ProcessTextActivity"
             android:exported="true"
             android:label="Ask Public AI"
             android:noHistory="true">
@@ -134,14 +134,14 @@
         
         <!-- Background streaming service -->
         <service
-            android:name=".BackgroundStreamingService"
+            android:name="ai.publicai.app.BackgroundStreamingService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="dataSync|microphone"/>
         
         <!-- Home Screen Widget -->
         <receiver
-            android:name=".ConduitWidgetProvider"
+            android:name="ai.publicai.app.ConduitWidgetProvider"
             android:exported="true"
             android:label="@string/widget_name">
             <intent-filter>

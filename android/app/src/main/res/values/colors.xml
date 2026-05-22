@@ -27,8 +27,5 @@
     <color name="widget_secondary_container_fallback">#E8DEF8</color>
     <color name="widget_on_secondary_container_fallback">#1D192B</color>
     <color name="widget_surface_fallback">#FFFBFE</color>
+    <color name="ic_launcher_background">#E42313</color>
 </resources>
-
-
-
-	<color name="ic_launcher_background">#E42313</color>

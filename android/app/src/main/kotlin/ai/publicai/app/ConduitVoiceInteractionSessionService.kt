@@ -1,4 +1,4 @@
-package ai.public.app
+package ai.publicai.app
 
 import android.service.voice.VoiceInteractionSession
 import android.service.voice.VoiceInteractionSessionService

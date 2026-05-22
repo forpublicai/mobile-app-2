@@ -1,4 +1,4 @@
-package ai.public.app
+package ai.publicai.app
 
 import android.content.Context
 import android.content.Intent
@@ -33,28 +33,28 @@ class ConduitVoiceInteractionSession(context: Context) : VoiceInteractionSession
             }
         }
 
-        val view = layoutInflater.inflate(ai.public.app.R.layout.assistant_overlay, null)
+        val view = layoutInflater.inflate(ai.publicai.app.R.layout.assistant_overlay, null)
 
         // Summarize page button - sends screen context
-        val summarizeButton = view.findViewById<android.view.View>(ai.public.app.R.id.btn_summarize)
+        val summarizeButton = view.findViewById<android.view.View>(ai.publicai.app.R.id.btn_summarize)
         summarizeButton?.setOnClickListener {
             launchAppWithContext(includeScreenshot = false)
         }
 
         // Ask about page button - sends screenshot
-        val askAboutButton = view.findViewById<android.view.View>(ai.public.app.R.id.btn_ask_about)
+        val askAboutButton = view.findViewById<android.view.View>(ai.publicai.app.R.id.btn_ask_about)
         askAboutButton?.setOnClickListener {
             launchAppWithScreenshot()
         }
 
         // Input area (opens text input)
-        val inputArea = view.findViewById<android.view.View>(ai.public.app.R.id.input_area)
+        val inputArea = view.findViewById<android.view.View>(ai.publicai.app.R.id.input_area)
         inputArea?.setOnClickListener {
             launchApp()
         }
 
         // Voice button - opens voice call directly
-        val voiceButton = view.findViewById<android.view.View>(ai.public.app.R.id.btn_voice)
+        val voiceButton = view.findViewById<android.view.View>(ai.publicai.app.R.id.btn_voice)
         voiceButton?.setOnClickListener {
             launchAppForVoiceCall()
         }

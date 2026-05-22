@@ -15,7 +15,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "ai.public.app"
+    namespace = "ai.publicai.app"
     compileSdk = 36
     ndkVersion = "29.0.14206865"
 
