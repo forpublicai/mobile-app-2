@@ -23,8 +23,8 @@ android {
     applicationId = "ai.public.app"
     minSdk = flutter.minSdkVersion
     targetSdk = 36
-    versionCode = flutter.versionCode
-    versionName = flutter.versionName
+    versionCode = 114
+    versionName = "3.0.1"
     }
 
     compileOptions {
